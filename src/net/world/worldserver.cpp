@@ -6,7 +6,7 @@ int main(int argc, char* argv[])
 {
 	
 	TCPServerSocket sock = TCPServerSocket();
-	sock.initialize("0.0.0.0", 8490);
+	sock.initialize("0.0.0.0", 8484);
 
 	while(true)
 	{
