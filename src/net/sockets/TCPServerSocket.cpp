@@ -98,7 +98,30 @@ int TCPServerSocket::waitOnConnections(int milliTimeout, int secTimeout)
 
 		//Packet p = Packet(reinterpret_cast<const unsigned char*>("0d003e00000046727add523078c208"), 30);
 		//const byte* bytes = stringToBytes("0d003e00000046727add523078c208", 30);
-//		send(clientSock->getSocket(), bytes, 15, 0);
+
+
+		PacketHandler handler = PacketHandler();
+		_short s = 0x0d;
+		handler.write(s);
+		s = 62;
+		handler.write(s);
+		s = 0;
+		handler.write(s);
+		handler.write(s);
+		
+		byte b1 = (byte)(rand() % 255);
+		byte b2 = (byte)(rand() % 255);
+		byte b3 = (byte)(rand() % 255);
+		byte arr[3] = {b1,b2,b3};
+		byte arr2[3] = {b3,b2,b1};
+		handler.write(arr, 3);
+		std::cout << handler.getByteStreamHex().str().c_str() << '\n';
+		handler.write(arr2, 3);
+		std::cout << handler.getByteStreamHex().str().c_str() << '\n';
+		byte b = 8;
+		handler.write(b);
+		std::cout << handler.getByteStreamHex().str().c_str() << '\n';
+		send(clientSock->getSocket(), handler.getPacket()->bytes, handler.getPacket()->length + 1, 0);
 		
 		
 		this->connections.push_front(clientSock);

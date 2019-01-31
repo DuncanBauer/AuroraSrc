@@ -30,6 +30,7 @@ class PacketHandler
 	byte readByte();
 	void write(byte b);
 	void write(const char *b);
+	void write(byte* b, int len);
 	void write(int b);
 	void write(_short b);
 	void write(_double b);

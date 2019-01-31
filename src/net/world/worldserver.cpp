@@ -4,9 +4,9 @@
 
 int main(int argc, char* argv[]) 
 {
-/*	
+	
 	TCPServerSocket sock = TCPServerSocket();
-	sock.initialize(argv[1], 8484);
+	sock.initialize("0.0.0.0", 8490);
 
 	while(true)
 	{
@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
 			}			
 		}
 	}
-*/
+
 
 
 

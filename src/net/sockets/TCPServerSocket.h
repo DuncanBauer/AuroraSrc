@@ -1,9 +1,10 @@
 #ifndef TCPServerSocket_H
 #define TCPServerSocket_h
 
-#include "TCPSocket.h"
-#include "../packets/Packet.h"
 #include <list>
+
+#include "TCPSocket.h"
+#include "../packets/PacketHandler.h"
 
 class TCPServerSocket: public TCPSocket 
 {

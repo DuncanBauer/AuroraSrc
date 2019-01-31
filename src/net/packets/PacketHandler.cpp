@@ -89,6 +89,14 @@ void PacketHandler::write(const char* b)
 	}
 }
 
+void PacketHandler::write(byte* b, int len)
+{
+	for(int i = 0; i < len; ++i)
+	{
+		this->writeByte(b[i]);
+	}
+}
+
 void PacketHandler::write(int b)
 {
 	this->writeByte((byte)(b & 0xFF));
