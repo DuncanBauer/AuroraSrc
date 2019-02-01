@@ -17,17 +17,14 @@ class TCPSocket
 {
     public:
         TCPSocket();
-        ~TCPSocket();
+        virtual ~TCPSocket();
 
 	int initialize(char* address, int port);
 	void setSocket(int sock);
 	int getSocket();
 
-    protected:
 	int sock = 0;
 	sockaddr_in hint;
-
-    private:
 };
 
 #endif

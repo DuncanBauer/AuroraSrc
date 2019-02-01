@@ -2,6 +2,7 @@
 
 Client::Client()
 {
+	this->sock = new TCPSocket();
 }
 
 Client::Client(TCPSocket* sock)

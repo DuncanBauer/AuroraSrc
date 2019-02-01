@@ -2,6 +2,7 @@
 
 TCPServerSocket::TCPServerSocket()
 {
+	this->sock = 0;
 }
 
 TCPServerSocket::~TCPServerSocket()

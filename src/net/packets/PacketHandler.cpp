@@ -2,6 +2,7 @@
 
 PacketHandler::PacketHandler()
 {
+	this->packet = Packet();
 }
 
 PacketHandler::~PacketHandler()
@@ -50,8 +51,8 @@ void PacketHandler::writeByte(byte b)
 		}
 		temp[this->packet.length] = b;
 		++this->packet.length;
-		std::free(this->packet.bytes);
-		this->packet.bytes = temp;
+		//std::free(this->packet.bytes);
+		this->packet.bytes = std::move(temp);
 	}
 
 }
@@ -67,8 +68,8 @@ byte PacketHandler::readByte()
 		{
 			temp[i - 1] = this->packet.bytes[i];
 		}
-		free(this->packet.bytes);
-		this->packet.bytes = temp;
+		//free(this->packet.bytes);
+		this->packet.bytes = std::move(temp);
 		--this->packet.length;
 	}
 
@@ -173,4 +174,43 @@ byte* PacketHandler::readString(int size)
 	return bytes;
 }
 
+byte* PacketHandler::nullTermBytes()
+{
+	byte* temp = (byte*) malloc(this->packet.length + 1);
+	for(int i = 0; i < this->packet.length; ++i)
+	{
+		temp[i] = this->packet.bytes[i];
+	}
+	temp[this->packet.length] = '\0';
 
+	return temp;
+}
+
+void PacketHandler::skip(int n)
+{
+	if(n > this->packet.length)
+	{
+		n = this->packet.length;
+	}
+
+	for(int i = 0; i < n; ++i)
+	{
+		this->readByte();
+	}
+}
+
+byte* PacketHandler::seek(int n)
+{
+	if(n > this->packet.length)
+	{
+		n = this->packet.length;
+	}
+
+	byte arr[n];
+	for(int i = 0; i < n; ++i)
+	{
+		arr[i] = this->readByte();
+	}
+
+	return arr;
+}

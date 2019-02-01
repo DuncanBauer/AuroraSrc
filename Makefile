@@ -1,6 +1,6 @@
 CC = g++
 
-CFLAGS = -Wall -std=c++17 -pthread
+CFLAGS = -Wall -g -std=c++17 -pthread
 
 WORLD_SOURCES = src/net/sockets/TCPSocket.cpp \
 	        src/net/sockets/TCPServerSocket.cpp \

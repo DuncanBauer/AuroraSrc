@@ -15,7 +15,7 @@
 class TCPServerSocket: public TCPSocket 
 {
     public:
-	const int POLL_TIMEOUT = 3;
+	const int POLL_TIMEOUT = 500;
 
 	TCPServerSocket();
 	virtual ~TCPServerSocket();

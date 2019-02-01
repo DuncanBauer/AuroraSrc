@@ -13,7 +13,7 @@ class LoginWorker
 		LoginWorker(Client* client);
 		~LoginWorker();
 		
-		static void run(Client* client);
+		static void run(Client* mclient);
 
 	private:
 		Client* client;

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <utility>
 
 #include <string.h>
 
@@ -40,6 +41,11 @@ class PacketHandler
 	_short readShort();
 	_double readDouble();
 	byte* readString(int size);
+
+	byte* nullTermBytes();
+
+	void skip(int n);
+	byte* seek(int n);
 
     private:
 	Packet packet;

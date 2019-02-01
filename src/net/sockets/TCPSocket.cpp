@@ -2,11 +2,12 @@
 
 TCPSocket::TCPSocket()
 {
+	this->sock = 0;
 }
 
 TCPSocket::~TCPSocket()
 {
-	if(this->sock != -1)
+	if(this->sock > 0)
 	{
 		close(this->sock);
 	}
@@ -40,9 +41,9 @@ int TCPSocket::initialize(char* address, int port)
 	return 1;
 }
 
-void TCPSocket::setSocket(int sock)
+void TCPSocket::setSocket(int _sock)
 {
-	this->sock = sock;
+	this->sock = _sock;
 }
 
 int TCPSocket::getSocket()
