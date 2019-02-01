@@ -6,8 +6,11 @@ WORLD_SOURCES = src/net/sockets/TCPSocket.cpp \
 	        src/net/sockets/TCPServerSocket.cpp \
 	        src/net/packets/Packet.cpp \
 	        src/net/packets/PacketHandler.cpp \
-	        src/net/world/worldserver.cpp \
-	        src/tools/hexTool.cpp
+	        src/net/login/LoginServer.cpp \
+		src/net/login/LoginWorker.cpp \
+		src/client/Client.cpp \
+	        src/tools/hexTool.cpp \
+		src/main.cpp
 
 TOOLS_SOURCES = src/tools/maintools.cpp \
 	        src/tools/hexTool.cpp \

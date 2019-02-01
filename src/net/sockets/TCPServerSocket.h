@@ -1,25 +1,35 @@
 #ifndef TCPServerSocket_H
 #define TCPServerSocket_h
 
-#include <list>
+#include <vector>
+#include <iterator>
+#include <thread>
 
-#include "TCPSocket.h"
+#include <poll.h>
+
+//#include "TCPSocket.h"
 #include "../packets/PacketHandler.h"
+#include "../../client/Client.h"
+
 
 class TCPServerSocket: public TCPSocket 
 {
     public:
-	TCPServerSocket();
-	~TCPServerSocket();
+	const int POLL_TIMEOUT = 3;
 
-	int waitOnConnections(int milliTimeout, int secTimeout);
+	TCPServerSocket();
+	virtual ~TCPServerSocket();
 	
+	virtual void run();
+
 	int getConnectionsLength();
-	std::list<TCPSocket*> getConnections();
-	void removeConnection(TCPSocket* socket);
+	std::vector<Client*> getConnections();
+	
+	void addConnection(Client* client);
+	void removeConnection(Client* client);
 
     private:
-	std::list<TCPSocket*> connections = std::list<TCPSocket*>();
+	std::vector<Client*> connections = std::vector<Client*>();
 	void pruneConnections();
 };
 
