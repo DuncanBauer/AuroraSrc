@@ -1,36 +1,62 @@
-#ifndef TCPServerSocket_H
-#define TCPServerSocket_h
+#ifndef TCPSERVERSOCKET_H
+#define TCPSERVERSOCKET_H
 
-#include <vector>
-#include <iterator>
+#include "TCPSocket.h"
+
+#include <map>
+#include <mutex>
+#include <memory>
 #include <thread>
+#include <chrono>
+#include <future>
+#include <exception>
 
-#include <poll.h>
+class Client;
 
-//#include "TCPSocket.h"
-#include "../packets/PacketHandler.h"
-#include "../../client/Client.h"
+using Connections = std::map<std::shared_ptr<Client>, std::shared_ptr<std::thread>>;
+
+enum ServerStatus
+{
+	OFFLINE,
+	INITIALIZING,
+	ONLINE
+};
 
 
 class TCPServerSocket: public TCPSocket 
 {
-    public:
-	const int POLL_TIMEOUT = 500;
+	public:
+		const int POLL_TIMEOUT = 500;
 
-	TCPServerSocket();
-	virtual ~TCPServerSocket();
+		TCPServerSocket(char* ip, int port, int id);
+		virtual ~TCPServerSocket();
+		
+		bool initialize(char* ip, int port);
+		virtual bool run();	
+		virtual bool connect();
+		virtual bool disconnect();
+		virtual bool reconnect();
+		virtual bool alertServer(int command);
+		virtual bool spawnWorker(std::shared_ptr<Client> client);
 	
-	virtual void run();
-
-	int getConnectionsLength();
-	std::vector<Client*> getConnections();
+		int getID();
+		void setID(int id);
+		
+		ServerStatus getStatus();
+		void setStatus(ServerStatus status);
 	
-	void addConnection(Client* client);
-	void removeConnection(Client* client);
+		std::mutex* getMutex();
+	
+		int getConnectionsLength();
+		Connections* getConnections();
+		void addConnection(std::shared_ptr<Client> client, std::shared_ptr<std::thread> thread);
+		void removeConnection(std::shared_ptr<Client> client);
 
-    private:
-	std::vector<Client*> connections = std::vector<Client*>();
-	void pruneConnections();
+	private:
+		std::unique_ptr<Connections> connections;
+		ServerStatus status;
+		std::mutex mtx;
+		int id;
 };
 
 #endif

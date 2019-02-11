@@ -5,7 +5,6 @@
 #include <string>
 #include <string.h>
 
-#include "../net/packets/Packet.h"
 
 namespace HexTool
 {

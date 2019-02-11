@@ -1,5 +1,5 @@
-#ifndef LOGINWORKER_H
-#define LOGINWORKER_H
+#ifndef CHANNELWORKER_H
+#define CHANNELWORKER_H
 
 
 #include "../../tools/packets/MaplePacketCreator.h"
@@ -9,15 +9,15 @@
 #include <iostream>
 #include <boost/shared_ptr.hpp>
 
-class LoginServer;
+class ChannelServer;
 
-class LoginWorker : public GenericWorker
+class ChannelWorker : public GenericWorker
 {
 	public:
-		LoginWorker();
-		LoginWorker(std::shared_ptr<LoginServer> loginServer, std::shared_ptr<Client> client);
-		virtual ~LoginWorker();
-
+		ChannelWorker();
+		ChannelWorker(std::shared_ptr<ChannelServer> channelServer, std::shared_ptr<Client> client);
+		virtual ~ChannelWorker();
+		
 		virtual void initialize();
 		virtual void run();
 		virtual void connect();
@@ -26,7 +26,7 @@ class LoginWorker : public GenericWorker
 		virtual void stop();
 
 	private:
-		std::shared_ptr<LoginServer> loginServer;
+		std::shared_ptr<ChannelServer> channelServer;
 		std::shared_ptr<Client> client;
 };
 

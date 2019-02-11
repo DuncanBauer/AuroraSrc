@@ -1,6 +1,6 @@
 CC = g++
 
-CFLAGS = -Wall -g -std=c++14 -pthread
+CFLAGS = -Wall -g -std=c++14 -lboost_system -lboost_thread
 
 WORLD_SOURCES = src/net/sockets/*.cpp \
 		src/net/login/*.cpp \

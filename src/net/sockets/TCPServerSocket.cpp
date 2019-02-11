@@ -1,18 +1,76 @@
 #include "TCPServerSocket.h"
+#include "../../client/Client.h"
 
-TCPServerSocket::TCPServerSocket()
+#include <iterator>
+#include <poll.h>
+#include <algorithm>
+#include <memory>
+#include <iostream>
+
+
+TCPServerSocket::TCPServerSocket(char* ip, int port, int id)
 {
-	this->sock = 0;
+	std::cout << "TCPServerSocket constructor called" << '\n';
+	this->setStatus(OFFLINE);
+	this->initialize(ip, port);
+	this->connections.reset(new Connections());
+	this->setID(id);
 }
 
 TCPServerSocket::~TCPServerSocket()
 {
-	this->connections.clear();
-	close(this->sock);
+	std::cout << "TCPServerSocket destructor called" << '\n';
+	try
+	{
+		if(!this->connections.get()->empty())
+		{
+			this->connections.get()->clear();
+		}
+		this->connections.reset();
+		close(this->getSocket());
+	}
+	catch(std::exception& e)
+	{
+		std::cerr << "Exception thrown in TCPSocketServer destructor" << '\n';
+	}
+	std::cout << "Destruction complete" << '\n';
 }
 
-void TCPServerSocket::run()
+bool TCPServerSocket::initialize(char* address, int port)
 {
+	this->setStatus(INITIALIZING);
+	this->setSocket(socket(AF_INET, SOCK_STREAM, 0));
+	if(this->getSocket() == -1)
+	{
+		std::cerr << "Can\'t create socket" << '\n';
+		return -1;
+	}
+
+	this->hint.sin_family = AF_INET;
+	this->hint.sin_port = htons(port);
+	inet_pton(AF_INET, address, &(this->hint.sin_addr));
+
+	if(bind(this->getSocket(), (sockaddr*)&(this->hint), sizeof(this->hint)) == -1)
+	{
+		std::cerr << "Couldn\'t bind socket to IP/PORT" << '\n';
+		this->setStatus(OFFLINE);
+		return false;
+	}
+
+	if(listen(this->getSocket(), SOMAXCONN) == -1)
+	{
+		std::cerr << "Can\'t listen" << '\n';
+		this->setStatus(OFFLINE);
+		return false;
+	}
+
+	this->setStatus(ONLINE);
+	return true;
+}
+
+bool TCPServerSocket::run()
+{
+/*  THIS IS HERE FOR REFERENCE
 	while(true)
 	{
 		sockaddr_in client;
@@ -46,52 +104,85 @@ void TCPServerSocket::run()
 			}
 		}
 		free(fds);
-
-		// Handle connected clients here
-		// check if theyre alive
-		// disconnect if dead after certain amount of time
-		// remove socket from connection vector
+		delete clientSock;
 	}
+*/
+	return true;
+}
+
+bool TCPServerSocket::connect()
+{
+	return true;
+}
+
+bool TCPServerSocket::disconnect()
+{
+	return true;
+}
+
+bool TCPServerSocket::reconnect()
+{
+	return true;
+}
+
+bool TCPServerSocket::alertServer(int command)
+{
+	return true;
+}
+
+bool TCPServerSocket::spawnWorker(std::shared_ptr<Client> client)
+{
+	return true;
+}
+
+int TCPServerSocket::getID()
+{
+	return this->id;
+}
+
+void TCPServerSocket::setID(int id)
+{
+	this->id = id;
+}
+
+ServerStatus TCPServerSocket::getStatus()
+{
+	return this->status;
+}
+
+void TCPServerSocket::setStatus(ServerStatus status)
+{
+	this->status = status;
+}
+
+std::mutex* TCPServerSocket::getMutex()
+{
+	return &(this->mtx);
 }
 
 int TCPServerSocket::getConnectionsLength()
 {
-	return this->connections.size();
+	return this->connections->size();
 }
 
-void TCPServerSocket::addConnection(Client* client)
+void TCPServerSocket::addConnection(std::shared_ptr<Client> client, std::shared_ptr<std::thread> thread)
 {
-	this->connections.push_back(client);
+	this->connections.get()->emplace(client, thread);
 }
 
-void TCPServerSocket::removeConnection(Client* client)
+void TCPServerSocket::removeConnection(std::shared_ptr<Client> client)
 {
-	auto it = this->connections.begin();
-	while(it != this->connections.end())
+	try
 	{
-		if((*it)->getSocket() == client->getSocket())
-		{
-			break;
-		}
-		std::next(it);
+		this->connections->erase(client);
 	}
-	if(it == this->connections.end())
+	catch(...)
 	{
-		this->connections.erase(it);
+		std::cerr << "No connections to remove" << '\n';
 	}
 }
 
-
-std::vector<Client*> TCPServerSocket::getConnections()
+Connections* TCPServerSocket::getConnections()
 {
-	return this->connections;
-}
-
-void TCPServerSocket::pruneConnections()
-{
-	for(auto it = this->connections.begin(); it != this->connections.end(); ++it)
-	{
-		//if(it == 0 || it == -1)
-
-	}
+	return this->connections.get();
 }

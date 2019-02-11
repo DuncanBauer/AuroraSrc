@@ -3,18 +3,26 @@
 
 #include "../net/sockets/TCPSocket.h"
 
+#include <boost/shared_ptr.hpp>
+
+class LoginWorker;
+class ChannelWorker;
+
 class Client
 {
 	public:
 		Client();
 		Client(TCPSocket* sock);
+		Client(std::shared_ptr<TCPSocket> sock);
 		~Client();
 
-		int getSocket();
+		std::shared_ptr<TCPSocket> getSocket();
 		void setSocket(int sock);
 
+		void disconnect();
+
 	protected:
-		TCPSocket* sock;
+		std::shared_ptr<TCPSocket> sock;
 };
 
 

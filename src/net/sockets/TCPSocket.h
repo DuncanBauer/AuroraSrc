@@ -1,30 +1,28 @@
-#ifndef TCPSocket_H
-#define TCPSocket_H
+#ifndef TCPSOCKET_H
+#define TCPSOCKET_H
 
 #include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/select.h>
 #include <sys/time.h>
+#include <unistd.h>
 #include <netdb.h>
 #include <arpa/inet.h>
-#include <unistd.h>
-#include <cstdlib>
-#include <string>
-#include <string.h>
-#include <iostream>
+#include <sys/socket.h>
+
 
 class TCPSocket 
 {
-    public:
-        TCPSocket();
-        virtual ~TCPSocket();
+	public:
+        	TCPSocket();
+		TCPSocket(int sock);
+        	~TCPSocket();
 
-	int initialize(char* address, int port);
-	void setSocket(int sock);
-	int getSocket();
+		void setSocket(int sock);
+		int getSocket();
 
-	int sock = 0;
-	sockaddr_in hint;
+		sockaddr_in hint; // Socket info
+
+	private:
+		int sock; // Socket the user is connected to
 };
 
 #endif

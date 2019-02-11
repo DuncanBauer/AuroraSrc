@@ -1,5 +1,5 @@
-#ifndef LOGINSERVER_H
-#define LOGINSERVER_H
+#ifndef CHANNELSERVER_H
+#define CHANNELSERVER_H
 
 /*
  * Included from TCPServerSocket.h
@@ -13,16 +13,16 @@
  */
 
 #include "../../tools/packets/PacketStream.h"
-#include "LoginWorker.h"
+#include "ChannelWorker.h"
 #include "../GenericMapleServer.h"
 
 
-class LoginServer : public GenericMapleServer
+class ChannelServer : public GenericMapleServer
 {
 	public:
-		LoginServer(char* ip, int port, std::shared_ptr<Master> master, int id);
-		virtual ~LoginServer();
-	
+		ChannelServer(char* ip, int port, std::shared_ptr<Master> master, int id);
+		virtual ~ChannelServer();
+		
 		virtual bool run();
 		virtual bool connect();
 		virtual bool disconnect();

@@ -1,10 +1,13 @@
-#include "net/login/LoginServer.h"
+#include "Master.h"
+
 
 int main(int argc, char* argv[])
 {
-	LoginServer sock = LoginServer();
-	sock.initialize("0.0.0.0", 8484);
-	sock.run();
-
+	std::shared_ptr<Master> master(new Master(1));
+	master->loginServer.reset(new LoginServer(master->IP, 8484, master, 0));
+	master->run();
+	master->shutdown();
 	return 0;
 }
+
+
