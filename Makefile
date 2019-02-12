@@ -24,14 +24,14 @@ OBJECTS=$(SOURCES:.cpp=.o)
 
 all : 
 	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o worldserver
-	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o tools
+	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o toolstest
 
 world :
 	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o worldserver
 
 tools :
-	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o tools
+	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o toolstest
 
 clean : 
-	rm -f tools
+	rm -f toolstest
 	rm -f worldserver
