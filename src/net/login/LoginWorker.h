@@ -7,7 +7,6 @@
 #include "../GenericWorker.h"
 
 #include <iostream>
-#include <boost/shared_ptr.hpp>
 
 class LoginServer;
 
@@ -15,7 +14,7 @@ class LoginWorker : public GenericWorker
 {
 	public:
 		LoginWorker();
-		LoginWorker(std::shared_ptr<LoginServer> loginServer, std::shared_ptr<Client> client);
+		LoginWorker(LoginServer* loginServer, std::shared_ptr<Client> client);
 		virtual ~LoginWorker();
 
 		virtual void initialize();
@@ -26,7 +25,7 @@ class LoginWorker : public GenericWorker
 		virtual void stop();
 
 	private:
-		std::shared_ptr<LoginServer> loginServer;
+		LoginServer* loginServer;
 		std::shared_ptr<Client> client;
 };
 

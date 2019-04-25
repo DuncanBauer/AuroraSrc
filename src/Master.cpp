@@ -10,6 +10,7 @@ Master::Master(int worldCount)
 		this->worldCount = worldCount;
 		this->serverAlertQueue.reset(new AlertQueue());
 		this->worlds.reset(new Worlds());
+		this->loginServer.reset(new LoginServer(this->IP, 8484, this, 0));
 	}
 	catch(std::exception& e)
 	{
@@ -55,7 +56,7 @@ void Master::run()
 	}
 	
 */
-/*
+
 	char command[256];
 	while(true)
 	{
@@ -68,12 +69,12 @@ void Master::run()
 
 		if(strcmp(command,"exit") == 0)
 		{
-			std::lock_guard<std::mutex> lock(mutex);
-			serverAlertQueue.get()->push(1);
+			std::lock_guard<std::mutex> lock(this->mutex);
+			this->serverAlertQueue->push(1);
 			break;
 		}
 	}
-*/
+
 	sleep(3);
 }
 
@@ -95,14 +96,19 @@ void Master::shutdown()
 
 }
 
-std::shared_ptr<LoginServer> Master::getLoginServer()
+AlertQueue* Master::getServerAlertQueue()
 {
-	return this->loginServer;
+	return this->serverAlertQueue.get();
 }
 
-std::shared_ptr<AlertQueue> Master::getServerAlertQueue()
+LoginServer* Master::getLoginServer()
 {
-	return this->serverAlertQueue;
+	return this->loginServer.get();
+}
+
+Worlds* Master::getWorlds()
+{
+	return this->worlds.get();
 }
 
 int Master::getWorldCount()

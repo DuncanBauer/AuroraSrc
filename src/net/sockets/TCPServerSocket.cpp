@@ -165,7 +165,7 @@ int TCPServerSocket::getConnectionsLength()
 	return this->connections->size();
 }
 
-void TCPServerSocket::addConnection(std::shared_ptr<Client> client, std::shared_ptr<std::thread> thread)
+void TCPServerSocket::addConnection(std::shared_ptr<Client> client, std::thread &thread)
 {
 	this->connections.get()->emplace(client, thread);
 }

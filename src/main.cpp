@@ -3,10 +3,10 @@
 
 int main(int argc, char* argv[])
 {
-	std::shared_ptr<Master> master(new Master(1));
-	master->loginServer.reset(new LoginServer(master->IP, 8484, master, 0));
+	Master* master = new Master(1);
 	master->run();
 	master->shutdown();
+	delete master;
 	return 0;
 }
 

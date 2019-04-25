@@ -18,6 +18,7 @@ World::~World()
 {
 	this->channels.get()->clear();
 	this->channels.reset();
+	this->master = NULL;
 }
 
 Master* World::getMaster()

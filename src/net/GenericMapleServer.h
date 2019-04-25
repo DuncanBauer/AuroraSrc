@@ -13,14 +13,14 @@ using AlertQueue = std::priority_queue<int>;
 class GenericMapleServer: public TCPServerSocket 
 {
 	public:
-		GenericMapleServer(char* ip, int port, std::shared_ptr<Master> master, int playerCount);
+		GenericMapleServer(char* ip, int port, Master* master, int playerCount);
 		virtual ~GenericMapleServer();
 	
-		std::shared_ptr<Master> getMaster();	
-		void setMaster(std::shared_ptr<Master> master);
+		Master* getMaster();	
+		void setMaster(Master* master);
 
-		std::weak_ptr<AlertQueue> getServerAlertQueue();
-		void setServerAlertQueue(std::shared_ptr<AlertQueue> serverAlertQueue);
+		AlertQueue* getServerAlertQueue();
+		void setServerAlertQueue(AlertQueue* serverAlertQueue);
  
 		virtual bool run();
 		virtual bool connect();
@@ -30,9 +30,11 @@ class GenericMapleServer: public TCPServerSocket
 		virtual bool spawnWorker(std::shared_ptr<Client> client);
 	
 	private:
-		std::shared_ptr<Master> master;
-		std::weak_ptr<AlertQueue> serverAlertQueue;
+		Master* master;
 		int playerCount;
+
+	protected:
+		AlertQueue* serverAlertQueue;
 };
 
 #endif

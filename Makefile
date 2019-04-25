@@ -23,15 +23,15 @@ OBJECTS=$(SOURCES:.cpp=.o)
 	CLIENT_EXEC=client
 
 all : 
-	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o worldserver
+	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o master
 	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o toolstest
 
-world :
-	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o worldserver
+master :
+	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o master
 
 tools :
 	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o toolstest
 
 clean : 
 	rm -f toolstest
-	rm -f worldserver
+	rm -f master

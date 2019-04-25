@@ -1,10 +1,9 @@
 #include "tools/packets/PacketStream.h"
-#include <boost/version.hpp>
 
 int main(int argc, char* argv[])
 {
 
-	std::cout << BOOST_VERSION /100000 << "." << BOOST_VERSION / 100 % 1000 << "." << BOOST_VERSION % 100 << '\n';
+//	std::cout << BOOST_VERSION /100000 << "." << BOOST_VERSION / 100 % 1000 << "." << BOOST_VERSION % 100 << '\n';
 
 
 

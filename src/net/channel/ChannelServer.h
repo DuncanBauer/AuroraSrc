@@ -20,7 +20,7 @@
 class ChannelServer : public GenericMapleServer
 {
 	public:
-		ChannelServer(char* ip, int port, std::shared_ptr<Master> master, int id);
+		ChannelServer(char* ip, int port, Master* master, int id);
 		virtual ~ChannelServer();
 		
 		virtual bool run();

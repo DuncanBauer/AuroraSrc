@@ -20,8 +20,9 @@ class Master
 		void run();
 		void shutdown();
 
-		std::shared_ptr<LoginServer> getLoginServer();
-		std::shared_ptr<AlertQueue> getServerAlertQueue();
+		AlertQueue* getServerAlertQueue();
+		LoginServer* getLoginServer();
+		Worlds* getWorlds();
 
 		int getWorldCount();
 		World* getWorld(int id);
@@ -39,8 +40,8 @@ class Master
 		char* IP = "0.0.0.0";
 		int worldCount;
 		std::mutex mutex;
-		std::shared_ptr<AlertQueue> serverAlertQueue;
-		std::shared_ptr<LoginServer> loginServer;
+		std::unique_ptr<AlertQueue> serverAlertQueue;
+		std::unique_ptr<LoginServer> loginServer;
 		std::unique_ptr<Worlds> worlds;
 };
 

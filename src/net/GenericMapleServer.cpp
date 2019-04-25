@@ -5,38 +5,38 @@
 #include <iostream>
 
 
-GenericMapleServer::GenericMapleServer(char* ip, int port, std::shared_ptr<Master> master, int id) : TCPServerSocket(ip, port, id)
+GenericMapleServer::GenericMapleServer(char* ip, int port, Master* master, int id) : TCPServerSocket(ip, port, id)
 {
 	std::cout << "GenericMapleServer constructor called" << '\n';
 	this->setMaster(master);
-	this->setServerAlertQueue(this->getMaster()->getServerAlertQueue());
+	this->setServerAlertQueue(master->getServerAlertQueue());
 	this->playerCount = 0;
 }
 
 GenericMapleServer::~GenericMapleServer()
 {
 	std::cout << "GenericMapleServer destructor called" << '\n';
-	this->master.reset();
-	this->serverAlertQueue.reset();
+	this->master = NULL;
+	this->serverAlertQueue = NULL;
 	this->playerCount = 0;
 }
 
-std::shared_ptr<Master> GenericMapleServer::getMaster()
+Master* GenericMapleServer::getMaster()
 {
 	return master;
 }
 
-void GenericMapleServer::setMaster(std::shared_ptr<Master> master)
+void GenericMapleServer::setMaster(Master* master)
 {
 	this->master = master;
 }
 
-std::weak_ptr<AlertQueue> GenericMapleServer::getServerAlertQueue()
+AlertQueue* GenericMapleServer::getServerAlertQueue()
 {
-	return this->serverAlertQueue;
+	return serverAlertQueue;
 }
 
-void GenericMapleServer::setServerAlertQueue(std::shared_ptr<AlertQueue> alertQueue)
+void GenericMapleServer::setServerAlertQueue(AlertQueue* alertQueue)
 {
 	this->serverAlertQueue = alertQueue;
 }

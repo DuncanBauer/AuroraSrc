@@ -7,7 +7,7 @@ LoginWorker::LoginWorker()
 {
 }
 
-LoginWorker::LoginWorker(std::shared_ptr<LoginServer> loginServer, std::shared_ptr<Client> client)
+LoginWorker::LoginWorker(LoginServer* loginServer, std::shared_ptr<Client> client)
 {
 	this->loginServer = loginServer;
 	this->client = client;
@@ -15,6 +15,7 @@ LoginWorker::LoginWorker(std::shared_ptr<LoginServer> loginServer, std::shared_p
 
 LoginWorker::~LoginWorker()
 {
+	this->loginServer = NULL;
 }
 
 void LoginWorker::initialize()
@@ -58,7 +59,7 @@ void LoginWorker::run()
 		}
 	}
 */
-	std::cout << "Ending loginworkerthread" << '\n';
+	std::cout << "Ending loginworker thread" << '\n';
 }
 
 void LoginWorker::connect()

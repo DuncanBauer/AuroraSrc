@@ -10,7 +10,7 @@
 #include <iostream>
 
 
-ChannelServer::ChannelServer(char* ip, int port, std::shared_ptr<Master> master, int id) : GenericMapleServer(ip, port, master, id)
+ChannelServer::ChannelServer(char* ip, int port, Master* master, int id) : GenericMapleServer(ip, port, master, id)
 {
 }
 

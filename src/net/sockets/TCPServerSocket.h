@@ -5,7 +5,6 @@
 
 #include <map>
 #include <mutex>
-#include <memory>
 #include <thread>
 #include <chrono>
 #include <future>
@@ -13,7 +12,7 @@
 
 class Client;
 
-using Connections = std::map<std::shared_ptr<Client>, std::shared_ptr<std::thread>>;
+using Connections = std::map<std::shared_ptr<Client>, std::thread&>;
 
 enum ServerStatus
 {
@@ -26,7 +25,7 @@ enum ServerStatus
 class TCPServerSocket: public TCPSocket 
 {
 	public:
-		const int POLL_TIMEOUT = 500;
+		const int POLL_TIMEOUT = 5;
 
 		TCPServerSocket(char* ip, int port, int id);
 		virtual ~TCPServerSocket();
@@ -49,7 +48,7 @@ class TCPServerSocket: public TCPSocket
 	
 		int getConnectionsLength();
 		Connections* getConnections();
-		void addConnection(std::shared_ptr<Client> client, std::shared_ptr<std::thread> thread);
+		void addConnection(std::shared_ptr<Client> client, std::thread &thread);
 		void removeConnection(std::shared_ptr<Client> client);
 
 	private:

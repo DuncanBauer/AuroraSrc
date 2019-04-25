@@ -16,11 +16,12 @@
 #include "LoginWorker.h"
 #include "../GenericMapleServer.h"
 
+//using Workers = std::map<int, std::shared_ptr<LoginWorker>>;
 
 class LoginServer : public GenericMapleServer
 {
 	public:
-		LoginServer(char* ip, int port, std::shared_ptr<Master> master, int id);
+		LoginServer(char* ip, int port, Master* master, int id);
 		virtual ~LoginServer();
 	
 		virtual bool run();
@@ -31,6 +32,7 @@ class LoginServer : public GenericMapleServer
 		virtual bool spawnWorker(std::shared_ptr<Client> client);
 
 	private:
+//		std::unique_ptr<Workers> workers;
 };
 
 

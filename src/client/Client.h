@@ -3,8 +3,6 @@
 
 #include "../net/sockets/TCPSocket.h"
 
-#include <boost/shared_ptr.hpp>
-
 class LoginWorker;
 class ChannelWorker;
 
