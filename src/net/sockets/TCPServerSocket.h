@@ -25,7 +25,7 @@ enum ServerStatus
 class TCPServerSocket: public TCPSocket 
 {
 	public:
-		const int POLL_TIMEOUT = 5;
+		const int POLL_TIMEOUT = 500;
 
 		TCPServerSocket(char* ip, int port, int id);
 		virtual ~TCPServerSocket();
