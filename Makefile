@@ -26,6 +26,7 @@ OBJECTS=$(SOURCES:.cpp=.o)
 all : 
 	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o master
 	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o toolstest
+	$(CC) $(CFLAGS) $(FILEIO_SOURCES) -o fileio
 
 master :
 	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o master

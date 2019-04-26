@@ -5,8 +5,9 @@
 class ConfigParser
 {
 	public:
-		std::map<std::string, std::string> getValuesFromFile(std::string filename);
+		ConfigParser();
+		~ConfigParser();
+		static std::map<std::string, std::string> getValuesFromFile(std::string filename);
 
 	private:
-		ConfigParser();
 };
