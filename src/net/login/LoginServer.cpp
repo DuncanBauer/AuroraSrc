@@ -28,7 +28,7 @@ bool LoginServer::run()
 		// Reads and executes server commands
 		if(this->getMaster()->serverAlertQueue->size() > 0)
 		{
-			std::cout << this->getMaster()->serverAlertQueue->size() << '\n';
+			//std::cout << this->getMaster()->serverAlertQueue->size() << '\n';
 			std::lock_guard<std::mutex> lock(this->getMaster()->mutex);
 			//if(!this->getMaster()->checkChannelsOnline())
 			//{
@@ -45,8 +45,6 @@ bool LoginServer::run()
 		std::thread loginWorkerThread;
 		std::shared_ptr<Client> client(new Client());
 
-		std::cout << "Connections length: " << this->getConnectionsLength() << '\n';
-		
 		struct pollfd *fds;
 		int fdcount = this->getConnectionsLength() + 1;
 		fds = (pollfd*)malloc(sizeof(struct pollfd) * fdcount);
@@ -67,7 +65,6 @@ bool LoginServer::run()
 			j++;
 		});
 
-		std::cout << "HANG?\n";
 		
 		if(poll(fds, fdcount, this->POLL_TIMEOUT))
 		{
@@ -77,20 +74,23 @@ bool LoginServer::run()
 
 			std::cout << "Socket: " << client->getSocket().get()->getSocket() << '\n';
 	
-			if(client->getSocket().get()->getSocket() != -1 && client->getSocket().get()->getSocket() != 0)
+			//if(client->getSocket().get()->getSocket() != -1 && client->getSocket().get()->getSocket() != 0)
+			if(client->getSocket().get()->getSocket() > -1)
 			{
 				// Spawn client on new thread
 				std::cout << "Client connected" << '\n';
 			
-				loginWorkerThread = std::thread([=]
+				//this->addConnection(client, std::thread([this, client]()
+				//{
+				//	this->spawnWorker(client);
+				//}));
+				loginWorkerThread = std::thread([this, client]
 				{ 
 					this->spawnWorker(client); 
 				});
 				this->addConnection(client, loginWorkerThread);
 			}
 		}
-		
-		std::cout << client->getSocket().get()->getSocket() << '\n';
 /*
 		if(client->getSocket().get()->getSocket() != -1 && client->getSocket().get()->getSocket() != 0)
 	//	if(client->getSocket().get()->getSocket() >= 0)
