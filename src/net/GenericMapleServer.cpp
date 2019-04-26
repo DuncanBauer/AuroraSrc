@@ -7,7 +7,7 @@
 
 GenericMapleServer::GenericMapleServer(char* ip, int port, Master* master, int id) : TCPServerSocket(ip, port, id)
 {
-	std::cout << "GenericMapleServer constructor called" << '\n';
+//	std::cout << "GenericMapleServer constructor called" << '\n';
 	this->setMaster(master);
 	this->setServerAlertQueue(master->getServerAlertQueue());
 	this->playerCount = 0;
@@ -15,7 +15,7 @@ GenericMapleServer::GenericMapleServer(char* ip, int port, Master* master, int i
 
 GenericMapleServer::~GenericMapleServer()
 {
-	std::cout << "GenericMapleServer destructor called" << '\n';
+//	std::cout << "GenericMapleServer destructor called" << '\n';
 	this->master = NULL;
 	this->serverAlertQueue = NULL;
 	this->playerCount = 0;

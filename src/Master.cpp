@@ -18,7 +18,8 @@ Master::Master(int worldCount)
 		char cstr[config["ip"].size() + 1];
 		config["ip"].copy(cstr, config["ip"].size() + 1);
 		cstr[config["ip"].size() - 1] = '\0';
-
+		
+		std::cout << "Launching login server" << '\n';
 		this->loginServer.reset(new LoginServer(cstr, std::stoi(config["loginserver.port"]), this, 0));
 	}
 	catch(std::exception& e)
@@ -40,7 +41,6 @@ void Master::run()
 {
 	using namespace std::chrono_literals;
 
-	std::cout << "Launching login server" << '\n';
 	try
 	{
 		//this->loginServer.reset(new LoginServer(this->IP, 8484, std::make_shared<Master>(this), 1984));

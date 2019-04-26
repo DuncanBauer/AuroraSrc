@@ -8,17 +8,17 @@
 
 TCPSocket::TCPSocket() : sock(0)
 {
-	std::cout << "TCPSocket default constructor called" << '\n';
+//	std::cout << "TCPSocket default constructor called" << '\n';
 }
 
 TCPSocket::TCPSocket(int sock) : sock(sock)
 {
-	std::cout << "TCPSocket constructor called" << '\n';
+//	std::cout << "TCPSocket constructor called" << '\n';
 }
 
 TCPSocket::~TCPSocket()
 {
-	std::cout << "TCPSocket destructor called" << '\n';
+//	std::cout << "TCPSocket destructor called" << '\n';
 	try
 	{
 		close(this->sock);

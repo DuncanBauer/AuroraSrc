@@ -12,12 +12,12 @@
 
 LoginServer::LoginServer(char* ip, int port, Master* master, int id) : GenericMapleServer(ip, port, master, id)
 {
-	std::cout << "LoginServer constructor called" << '\n';
+//	std::cout << "LoginServer constructor called" << '\n';
 }
 
 LoginServer::~LoginServer()
 {
-	std::cout << "LoginServer destructor called" << '\n';
+//	std::cout << "LoginServer destructor called" << '\n';
 }
 
 bool LoginServer::run()
@@ -52,7 +52,7 @@ bool LoginServer::run()
 		fds[0].fd = this->getSocket();
 		fds[0].events = POLLIN | POLLOUT;
 		//fds[0].events |= POLLOUT;
-		std::cout << fds[0].events << '\n';
+		
 		int j = 0;
 		Connections* temp = this->getConnections();
 		// Checks for pending connections and connects the first one

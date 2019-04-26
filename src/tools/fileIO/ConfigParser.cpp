@@ -23,7 +23,6 @@ std::map<std::string, std::string> ConfigParser::getValuesFromFile(std::string f
 		std::cout << "Couldn't get path" << '\n';
 	}
 
-
 	std::string line;
 	std::ifstream file;
 	file.open(filename);
@@ -40,7 +39,6 @@ std::map<std::string, std::string> ConfigParser::getValuesFromFile(std::string f
 				std::string key = line.substr(0, line.find('='));
 				std::string value = line.substr(line.find('=')+1, line.size()-1);
 				config.emplace(key, value);
-				std::cout << key << ": " << value << '\n';
 			}
 		}
 	}

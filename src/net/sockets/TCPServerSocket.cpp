@@ -10,7 +10,7 @@
 
 TCPServerSocket::TCPServerSocket(char* ip, int port, int id)
 {
-	std::cout << "TCPServerSocket constructor called" << '\n';
+//	std::cout << "TCPServerSocket constructor called" << '\n';
 	this->setStatus(OFFLINE);
 	if(this->initialize(ip, port))
 	{	
@@ -22,7 +22,7 @@ TCPServerSocket::TCPServerSocket(char* ip, int port, int id)
 
 TCPServerSocket::~TCPServerSocket()
 {
-	std::cout << "TCPServerSocket destructor called" << '\n';
+//	std::cout << "TCPServerSocket destructor called" << '\n';
 	try
 	{
 		if(!this->connections.get()->empty())
