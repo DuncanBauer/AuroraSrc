@@ -52,7 +52,7 @@ bool LoginServer::run()
 		fds[0].fd = this->getSocket();
 		fds[0].events = POLLIN | POLLOUT;
 		//fds[0].events |= POLLOUT;
-
+		std::cout << fds[0].events << '\n';
 		int j = 0;
 		Connections* temp = this->getConnections();
 		// Checks for pending connections and connects the first one
