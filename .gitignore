@@ -1,4 +1,9 @@
 toolstest
 master
 fileio
+
+toolstest.exe
+master.exe
+fileio.exe
+
 *.swp
