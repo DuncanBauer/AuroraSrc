@@ -72,8 +72,8 @@ bool LoginServer::run()
 		if(poll(fds, fdcount, this->POLL_TIMEOUT))
 		{
 			client->setSocket(accept(this->getSocket(),
-					         (sockaddr*) &client_addr, 
-						 &clientSize));
+				         (sockaddr*) &client_addr, 
+					 &clientSize));
 
 			std::cout << "Socket: " << client->getSocket().get()->getSocket() << '\n';
 	

@@ -36,9 +36,9 @@ class Master
 		void addWorld(World* world);
 		void removeWorld(World* world);
 	
-
-		char* IP = "127.0.0.1";
 		int worldCount;
+		std::string ip;
+		int loginserverport;
 		std::mutex mutex;
 		std::unique_ptr<AlertQueue> serverAlertQueue;
 		std::unique_ptr<LoginServer> loginServer;

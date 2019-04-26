@@ -1,5 +1,7 @@
 #include "Master.h"
 
+#include "tools/fileIO/ConfigParser.h"
+
 #include <algorithm>
 #include <unistd.h>
 
@@ -7,10 +9,17 @@ Master::Master(int worldCount)
 {
 	try
 	{	
+		ConfigParser configparser = ConfigParser();
+		std::map<std::string, std::string> config = configparser.getValuesFromFile("master.conf");
 		this->worldCount = worldCount;
 		this->serverAlertQueue.reset(new AlertQueue());
 		this->worlds.reset(new Worlds());
-		this->loginServer.reset(new LoginServer(this->IP, 8484, this, 0));
+
+		char cstr[config["ip"].size() + 1];
+		config["ip"].copy(cstr, config["ip"].size() + 1);
+		cstr[config["ip"].size() - 1] = '\0';
+
+		this->loginServer.reset(new LoginServer(cstr, std::stoi(config["loginserver.port"]), this, 0));
 	}
 	catch(std::exception& e)
 	{

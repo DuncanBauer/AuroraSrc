@@ -10,6 +10,7 @@ WORLD_SOURCES = src/net/sockets/*.cpp \
 		src/client/*.cpp \
 	        src/tools/*.cpp \
 		src/tools/packets/*.cpp \
+		src/tools/fileIO/ConfigParser.cpp \
 		src/Master.cpp \
 		src/main.cpp
 

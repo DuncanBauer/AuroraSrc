@@ -15,14 +15,12 @@ ConfigParser::~ConfigParser()
 
 std::map<std::string, std::string> ConfigParser::getValuesFromFile(std::string filename)
 {
-	std::cout << "Called statically\n";
-	std::cout << filename << '\n';
 	std::map<std::string, std::string> config;
 	
 	char cwd[PATH_MAX];
-	if(getcwd(cwd, sizeof(cwd)) != NULL)
+	if(getcwd(cwd, sizeof(cwd)) == NULL)
 	{
-		std::cout << "CWD: " << cwd << '\n';
+		std::cout << "Couldn't get path" << '\n';
 	}
 
 
@@ -31,10 +29,19 @@ std::map<std::string, std::string> ConfigParser::getValuesFromFile(std::string f
 	file.open(filename);
 	if(file.is_open())
 	{
-		std::cout << "open\n";
 		while(getline(file, line))
 		{
-			std::cout << line << '\n';
+			if(line.front() == '#' || line.length() <= 1)
+			{
+				continue;
+			}
+			else
+			{
+				std::string key = line.substr(0, line.find('='));
+				std::string value = line.substr(line.find('=')+1, line.size()-1);
+				config.emplace(key, value);
+				std::cout << key << ": " << value << '\n';
+			}
 		}
 	}
 	file.close();
