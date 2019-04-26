@@ -2,6 +2,8 @@
 
 #include "tools/fileIO/ConfigParser.h"
 
+#include <limits>
+#include <ios>
 #include <algorithm>
 #include <unistd.h>
 
@@ -66,20 +68,28 @@ void Master::run()
 	
 */
 
-	char command[256];
 	while(true)
 	{
 	//	if(future.wait_for(0ms) == std::future_status::ready)
 	//	{
 	//		std::cout << "Login Thread closed" << '\n';
 	//	}
-		std::cout << "> ";
-		std::cin.getline(command, 256);
-
-		if(strcmp(command,"exit") == 0)
+		//if(strcmp(command,"exit") == 0)
+		/*if(cmd == "exit")
 		{
 			std::lock_guard<std::mutex> lock(this->mutex);
 			this->serverAlertQueue->push(1);
+			break;
+		}*/
+		std::string cmd;
+		std::cin.clear();
+		std::cin.sync();
+		std::cout << "> ";
+	//	std::getline(std::cin, cmd);
+		std::cin >> cmd;
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		if(cmd == "exit")
+		{
 			break;
 		}
 	}

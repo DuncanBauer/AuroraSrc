@@ -84,11 +84,11 @@ bool LoginServer::run()
 				//{
 				//	this->spawnWorker(client);
 				//}));
-				loginWorkerThread = std::thread([this, client]
+				loginWorkerThread = std::thread([this, client]()
 				{ 
 					this->spawnWorker(client); 
 				});
-				this->addConnection(client, loginWorkerThread);
+				//this->addConnection(client, loginWorkerThread);
 			}
 		}
 /*
