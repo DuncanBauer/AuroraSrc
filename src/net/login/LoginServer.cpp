@@ -22,9 +22,6 @@ LoginServer::~LoginServer()
 
 bool LoginServer::run()
 {
-	std::thread loginWorkerThread;
-	std::shared_ptr<Client> client(new Client());
-
 	// Run until shutdown command is sent
 	while(true)
 	{	
@@ -45,12 +42,18 @@ bool LoginServer::run()
 		sockaddr_in client_addr;
 		socklen_t clientSize = sizeof(client_addr);
 
+		std::thread loginWorkerThread;
+		std::shared_ptr<Client> client(new Client());
+
+		std::cout << "Connections length: " << this->getConnectionsLength() << '\n';
+		
 		struct pollfd *fds;
 		int fdcount = this->getConnectionsLength() + 1;
 		fds = (pollfd*)malloc(sizeof(struct pollfd) * fdcount);
 
 		fds[0].fd = this->getSocket();
-		fds[0].events = POLLOUT | POLLIN;
+		fds[0].events = POLLIN | POLLOUT;
+		//fds[0].events |= POLLOUT;
 
 		int j = 0;
 		Connections* temp = this->getConnections();
@@ -59,17 +62,38 @@ bool LoginServer::run()
 		{
 		//	fds[j + 1].fd = temp->at(connection.first)->getSocket()->getSocket();
 			fds[j + 1].fd = connection.first->getSocket()->getSocket();
-		//	fds[j + 1].events = POLLOUT | POLLIN;
-			fds[j + 1].events = POLLIN;
+		//	fds[j + 1].events |= POLLOUT;
+			fds[j + 1].events = POLLIN | POLLOUT;
+			j++;
 		});
+
+		std::cout << "HANG?\n";
+		
 		if(poll(fds, fdcount, this->POLL_TIMEOUT))
 		{
 			client->setSocket(accept(this->getSocket(),
 					         (sockaddr*) &client_addr, 
 						 &clientSize));
-		}
 
+			std::cout << "Socket: " << client->getSocket().get()->getSocket() << '\n';
+	
+			if(client->getSocket().get()->getSocket() != -1 && client->getSocket().get()->getSocket() != 0)
+			{
+				// Spawn client on new thread
+				std::cout << "Client connected" << '\n';
+			
+				loginWorkerThread = std::thread([=]
+				{ 
+					this->spawnWorker(client); 
+				});
+				this->addConnection(client, loginWorkerThread);
+			}
+		}
+		
+		std::cout << client->getSocket().get()->getSocket() << '\n';
+/*
 		if(client->getSocket().get()->getSocket() != -1 && client->getSocket().get()->getSocket() != 0)
+	//	if(client->getSocket().get()->getSocket() >= 0)
 		{
 			std::cout << client->getSocket()->getSocket() << '\n';
 			// Spawn client on new thread
@@ -81,6 +105,7 @@ bool LoginServer::run()
 			});
 			this->addConnection(client, loginWorkerThread);
 		}
+*/
 		free(fds);
 	}
 
@@ -128,7 +153,7 @@ bool LoginServer::spawnWorker(std::shared_ptr<Client> client)
 {
 	LoginWorker loginWorker = LoginWorker(this, client);
 //	workers.get()->emplace(workers.get()->size(), std::make_shared<LoginWorker>(loginWorker));
-	loginWorker.run();
+//	loginWorker.run();
 	return true;
 }
 

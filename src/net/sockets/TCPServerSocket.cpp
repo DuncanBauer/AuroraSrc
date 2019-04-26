@@ -12,7 +12,10 @@ TCPServerSocket::TCPServerSocket(char* ip, int port, int id)
 {
 	std::cout << "TCPServerSocket constructor called" << '\n';
 	this->setStatus(OFFLINE);
-	this->initialize(ip, port);
+	if(this->initialize(ip, port))
+	{	
+		std::cout << "Server Online \n";
+	}
 	this->connections.reset(new Connections());
 	this->setID(id);
 }
@@ -106,8 +109,8 @@ bool TCPServerSocket::run()
 		free(fds);
 		delete clientSock;
 	}
-*/
-	return true;
+
+*/	return true;
 }
 
 bool TCPServerSocket::connect()

@@ -17,6 +17,7 @@ TOOLS_SOURCES = src/maintools.cpp \
 	        src/tools/*.cpp \
 		src/tools/packets/*.cpp \
 	       
+FILEIO_SOURCES = src/tools/fileIO/*.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)
 	SERVER_EXEC=server
@@ -32,6 +33,10 @@ master :
 tools :
 	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o toolstest
 
+fileio: 
+	$(CC) $(CFLAGS) $(FILEIO_SOURCES) -o fileio
+
 clean : 
 	rm -f toolstest
+	rm -f fileio
 	rm -f master

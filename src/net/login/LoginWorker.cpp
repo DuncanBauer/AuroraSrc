@@ -24,10 +24,9 @@ void LoginWorker::initialize()
 
 void LoginWorker::run()
 {
-/*
 	PacketStream ps;
 	ps.setPacket(MaplePacketCreator::getHandshake());
-	send(this->client->getSocket(), ps.getByteStream().str().c_str(), ps.getPacket().length + 1, 0);
+	send(this->client->getSocket()->getSocket(), ps.getByteStream().str().c_str(), ps.getPacket().length + 1, 0);
 	std::cout << ps.getByteStream().str() << '\n';
 	std::cout << ps.getByteStreamHex().str() << '\n';
 
@@ -51,14 +50,13 @@ void LoginWorker::run()
 		byte buff[512];
 		memset(buff, 0, 512);
 
-		int bytesRecv = recv(client->getSocket(), buff, 512, 0);
+		int bytesRecv = recv(client->getSocket()->getSocket(), buff, 512, 0);
 		if(bytesRecv)
 		{
 			std::cout << "# Bytes: " << bytesRecv << '\n';
 			std::cout << "Data: " << buff << '\n';
 		}
 	}
-*/
 	std::cout << "Ending loginworker thread" << '\n';
 }
 

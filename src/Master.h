@@ -37,7 +37,7 @@ class Master
 		void removeWorld(World* world);
 	
 
-		char* IP = "0.0.0.0";
+		char* IP = "127.0.0.1";
 		int worldCount;
 		std::mutex mutex;
 		std::unique_ptr<AlertQueue> serverAlertQueue;
