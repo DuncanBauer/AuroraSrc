@@ -7,18 +7,18 @@ WORLD_SOURCES = src/net/sockets/*.cpp \
 		src/net/channel/*.cpp \
 		src/net/crypto/*.cpp \
 		src/net/*.cpp \
-		src/client/*.cpp \
 	        src/tools/*.cpp \
 		src/tools/packets/*.cpp \
-		src/tools/fileIO/ConfigParser.cpp \
+		src/tools/fileIO/*.cpp \
 		src/Master.cpp \
 		src/main.cpp
 
 TOOLS_SOURCES = src/maintools.cpp \
 	        src/tools/*.cpp \
-		src/tools/packets/*.cpp \
+		src/tools/packets/*.cpp
 	       
-FILEIO_SOURCES = src/tools/fileIO/*.cpp
+FILEIO_SOURCES = src/tools/fileIO/*.cpp \
+		 src/mainfileIO.cpp
 
 OBJECTS=$(SOURCES:.cpp=.o)
 	SERVER_EXEC=server

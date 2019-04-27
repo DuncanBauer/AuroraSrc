@@ -43,10 +43,10 @@ class PacketStream
 	_double readDouble();
 	std::string readString(int size);
 
-	byte* nullTermBytes();
+	void nullTermBytes(byte * arr);
 
 	void skip(int n);
-	byte* seek(int n);
+	void seek(int n, byte * arr);
 
     private:
 	Packet packet;

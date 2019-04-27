@@ -21,12 +21,25 @@ TCPSocket::~TCPSocket()
 //	std::cout << "TCPSocket destructor called" << '\n';
 	try
 	{
-		close(this->sock);
+		if(!this->closeSocket())
+		{
+			std::cerr << "TCPSocket failed to close\n";
+		}
 	}
 	catch(std::exception& ex)
 	{
 		std::cerr << "Exception thrown destroying TCPSocket" << '\n';
 	}
+}
+
+bool TCPSocket::closeSocket()
+{
+	if(sock > -1)
+	{
+		close(this->sock);
+		return true;
+	}
+	return false;
 }
 
 void TCPSocket::setSocket(int sock)
@@ -38,3 +51,15 @@ int TCPSocket::getSocket()
 {
 	return this->sock;
 }
+
+sockaddr_in* TCPSocket::getHint()
+{
+	return &(this->hint);
+}
+
+void TCPSocket::setHint(sockaddr_in client_addr)
+{
+	this->hint = client_addr;
+}
+
+

@@ -1,5 +1,5 @@
 #include "ChannelServer.h"
-#include "../../client/Client.h"
+#include "../sockets/TCPClientSocket.h"
 #include "../../Master.h"
 
 #include <iterator>
@@ -37,7 +37,7 @@ bool ChannelServer::run()
 		sockaddr_in client_addr;
 		socklen_t clientSize = sizeof(client_addr);
 
-		Client* client = new Client();
+		TCPClientSocket* client = new TCPClientSocket();
 
 		struct pollfd *fds;
 		int fdcount = this->getConnectionsLength() + 1;
@@ -47,7 +47,7 @@ bool ChannelServer::run()
 		fds[0].events = POLLOUT | POLLIN;
 
 		int j = 0;
-		std::map<std::thread*, Client*>* temp = this->getConnections();
+		std::map<std::thread*, TCPClientSocket*>* temp = this->getConnections();
 		std::for_each(temp->begin(), temp->end(), [&temp, &fds, &j](auto connection)
 		{
 			fds[j + 1].fd = temp->at(connection.first)->getSocket();
@@ -64,7 +64,7 @@ bool ChannelServer::run()
 		if(client->getSocket() != -1 && client->getSocket() != 0)
 		{
 			// Spawn client_addr on new thread
-		//	std::cout << "Client connected" << '\n';
+		//	std::cout << "TCPClientSocket connected" << '\n';
 		
 			std::thread channelWorkerThread = std::thread([=] { 
 				this->spawnWorker(client); 
@@ -108,7 +108,7 @@ bool ChannelServer::alertServer(int command)
 	return true;
 }
 
-bool ChannelServer::spawnWorker(std::shared_ptr<Client> client)
+bool ChannelServer::spawnWorker(std::shared_ptr<TCPClientSocket> client)
 {
 	ChannelWorker channelWorker = ChannelWorker(std::shared_ptr<ChannelServer>(this), client);
 	channelWorker.run();

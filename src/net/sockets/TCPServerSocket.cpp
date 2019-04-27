@@ -1,5 +1,5 @@
 #include "TCPServerSocket.h"
-#include "../../client/Client.h"
+#include "TCPClientSocket.h"
 
 #include <iterator>
 #include <poll.h>
@@ -49,11 +49,11 @@ bool TCPServerSocket::initialize(char* address, int port)
 		return -1;
 	}
 
-	this->hint.sin_family = AF_INET;
-	this->hint.sin_port = htons(port);
-	inet_pton(AF_INET, address, &(this->hint.sin_addr));
+	this->getHint()->sin_family = AF_INET;
+	this->getHint()->sin_port = htons(port);
+	inet_pton(AF_INET, address, &(this->getHint()->sin_addr));
 
-	if(bind(this->getSocket(), (sockaddr*)&(this->hint), sizeof(this->hint)) == -1)
+	if(bind(this->getSocket(), (sockaddr*)(this->getHint()), sizeof(*this->getHint())) == -1)
 	{
 		std::cerr << "Couldn\'t bind socket to IP/PORT" << '\n';
 		this->setStatus(OFFLINE);
@@ -132,7 +132,7 @@ bool TCPServerSocket::alertServer(int command)
 	return true;
 }
 
-bool TCPServerSocket::spawnWorker(std::shared_ptr<Client> client)
+bool TCPServerSocket::spawnWorker(std::shared_ptr<TCPClientSocket> client)
 {
 	return true;
 }
@@ -167,12 +167,12 @@ int TCPServerSocket::getConnectionsLength()
 	return this->connections->size();
 }
 
-void TCPServerSocket::addConnection(std::shared_ptr<Client> client, std::shared_ptr<std::thread> thread)
+void TCPServerSocket::addConnection(std::shared_ptr<TCPClientSocket> client, std::shared_ptr<std::thread> thread)
 {
-	this->connections.get()->emplace(client, thread);
+	this->connections.get()->emplace(client, std::move(thread));
 }
 
-void TCPServerSocket::removeConnection(std::shared_ptr<Client> client)
+void TCPServerSocket::removeConnection(std::shared_ptr<TCPClientSocket> client)
 {
 	try
 	{

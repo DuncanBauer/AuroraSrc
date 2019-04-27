@@ -17,13 +17,18 @@ class TCPSocket
 		TCPSocket(int sock);
         	~TCPSocket();
 
+		bool closeSocket();
+
 		void setSocket(int sock);
 		int getSocket();
+	
+		sockaddr_in* getHint();
+		void setHint(sockaddr_in client_addr);
 
-		sockaddr_in hint; // Socket info
 
 	private:
 		int sock; // Socket the user is connected to
+		sockaddr_in hint; // Socket info
 };
 
 #endif

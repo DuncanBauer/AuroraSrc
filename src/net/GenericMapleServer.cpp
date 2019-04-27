@@ -1,6 +1,6 @@
 #include "GenericMapleServer.h"
 #include "../Master.h"
-#include "../client/Client.h"
+#include "sockets/TCPClientSocket.h"
 
 #include <iostream>
 
@@ -68,7 +68,7 @@ bool GenericMapleServer::alertServer(int command)
 	return true;
 }
 
-bool GenericMapleServer::spawnWorker(std::shared_ptr<Client> client)
+bool GenericMapleServer::spawnWorker(std::shared_ptr<TCPClientSocket> client)
 {
 	return true;
 }

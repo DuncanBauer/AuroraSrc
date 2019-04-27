@@ -4,7 +4,7 @@ ChannelWorker::ChannelWorker()
 {
 }
 
-ChannelWorker::ChannelWorker(std::shared_ptr<ChannelServer> channelServer, std::shared_ptr<Client> client)
+ChannelWorker::ChannelWorker(std::shared_ptr<ChannelServer> channelServer, std::shared_ptr<TCPClientSocket> client)
 {
 	this->channelServer = channelServer;
 	this->client = client;

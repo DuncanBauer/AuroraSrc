@@ -29,7 +29,7 @@ class LoginServer : public GenericMapleServer
 		virtual bool disconnect();
 		virtual bool reconnect();
 		virtual bool alertServer(int command);
-		virtual bool spawnWorker(std::shared_ptr<Client> client);
+		virtual bool spawnWorker(std::shared_ptr<TCPClientSocket> client);
 
 	private:
 //		std::unique_ptr<Workers> workers;

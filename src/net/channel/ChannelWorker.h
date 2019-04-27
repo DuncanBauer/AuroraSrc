@@ -3,7 +3,7 @@
 
 
 #include "../../tools/packets/MaplePacketCreator.h"
-#include "../../client/Client.h"
+#include "../sockets/TCPClientSocket.h"
 #include "../GenericWorker.h"
 
 #include <iostream>
@@ -14,7 +14,7 @@ class ChannelWorker : public GenericWorker
 {
 	public:
 		ChannelWorker();
-		ChannelWorker(std::shared_ptr<ChannelServer> channelServer, std::shared_ptr<Client> client);
+		ChannelWorker(std::shared_ptr<ChannelServer> channelServer, std::shared_ptr<TCPClientSocket> client);
 		virtual ~ChannelWorker();
 		
 		virtual void initialize();
@@ -26,7 +26,7 @@ class ChannelWorker : public GenericWorker
 
 	private:
 		std::shared_ptr<ChannelServer> channelServer;
-		std::shared_ptr<Client> client;
+		std::shared_ptr<TCPClientSocket> client;
 };
 
 #endif

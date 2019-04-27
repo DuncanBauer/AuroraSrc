@@ -45,10 +45,10 @@ void Master::run()
 
 	//std::future<bool> future = std::async(std::launch::async, &LoginServer::run, this->loginServer.get());
 	
-	if(this->loginServer.get()->getStatus() == ONLINE)
+	if(this->loginServer->getStatus() == ONLINE)
 	{
 		std::thread loginThread = std::thread{[this](){
-			this->loginServer.get()->run();
+			this->loginServer->run();
 		}};
 
 		// Create and launch login server thread
@@ -61,7 +61,7 @@ void Master::run()
 			}
 		*/
 			std::string cmd;
-			std::cout << "> ";
+			//std::cout << "> ";
 			std::getline(std::cin, cmd);
 			if(cmd == "exit")
 			{
@@ -71,9 +71,7 @@ void Master::run()
 				this->mutex.unlock();
 
 				// unsafe exit need to wait for server shutdown
-				std::cout << "Joining loginthread\n";
 				loginThread.join();
-				std::cout << "Loginthread close\n";
 				break;
 			}
 		}
