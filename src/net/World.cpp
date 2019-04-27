@@ -100,6 +100,7 @@ void World::addChannel(std::shared_ptr<ChannelServer> channel)
 
 bool World::removeChannel(std::shared_ptr<ChannelServer> channel)
 {
+	return true;
 	/*
 	auto it = this->channels.begin();
 	while(it != this->channels.end())

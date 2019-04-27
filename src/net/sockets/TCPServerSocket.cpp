@@ -15,6 +15,7 @@ TCPServerSocket::TCPServerSocket(char* ip, int port, int id)
 	if(this->initialize(ip, port))
 	{	
 		std::cout << "Server Online \n";
+		this->setStatus(ONLINE);
 	}
 	this->connections.reset(new Connections());
 	this->setID(id);
@@ -36,7 +37,6 @@ TCPServerSocket::~TCPServerSocket()
 	{
 		std::cerr << "Exception thrown in TCPSocketServer destructor" << '\n';
 	}
-	std::cout << "Destruction complete" << '\n';
 }
 
 bool TCPServerSocket::initialize(char* address, int port)
@@ -67,7 +67,6 @@ bool TCPServerSocket::initialize(char* address, int port)
 		return false;
 	}
 
-	this->setStatus(ONLINE);
 	return true;
 }
 
@@ -168,7 +167,7 @@ int TCPServerSocket::getConnectionsLength()
 	return this->connections->size();
 }
 
-void TCPServerSocket::addConnection(std::shared_ptr<Client> client, std::thread &thread)
+void TCPServerSocket::addConnection(std::shared_ptr<Client> client, std::shared_ptr<std::thread> thread)
 {
 	this->connections.get()->emplace(client, thread);
 }

@@ -12,17 +12,13 @@ int main(int argc, char* argv[])
 	//	}
 		//if(strcmp(command,"exit") == 0)
 		std::string cmd;
-		std::cin.clear();
-		std::cin.sync();
 		std::cout << "> ";
 		std::getline(std::cin, cmd);
-
 		if(cmd == "exit")
 		{
 			break;
 		}
 	}
-
 */
 	Master* master = new Master(1);
 	master->run();

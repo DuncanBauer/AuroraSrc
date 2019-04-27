@@ -160,9 +160,9 @@ std::string PacketStream::readString(int size)
 
 byte* PacketStream::nullTermBytes()
 {
-/*
-	byte* temp = (byte*) malloc(this->packet.length + 1);
-	for(int i = 0; i < this->packet.length; ++i)
+	byte temp[this->packet.length + 1];
+//	byte* temp = (byte*) malloc(this->packet.length + 1);
+/*	for(int i = 0; i < this->packet.length; ++i)
 	{
 		temp[i] = this->packet.bytes[i];
 	}
@@ -170,6 +170,7 @@ byte* PacketStream::nullTermBytes()
 
 	return temp;
 */
+	return temp;
 }
 
 void PacketStream::skip(int n)
@@ -187,16 +188,17 @@ void PacketStream::skip(int n)
 
 byte* PacketStream::seek(int n)
 {
+	//byte* temp = (byte*) malloc(this->packet.length + 1);
+	byte temp[this->packet.length + 1];
 	if(n > this->packet.length)
 	{
 		n = this->packet.length;
 	}
 
-	byte arr[n];
 	for(int i = 0; i < n; ++i)
 	{
-		arr[i] = this->readByte();
+		temp[i] = this->readByte();
 	}
 
-	return arr;
+	return temp;
 }

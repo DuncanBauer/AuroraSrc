@@ -20,14 +20,24 @@ Client::~Client()
 	this->sock.reset();
 }
 
-std::shared_ptr<TCPSocket> Client::getSocket()
+int Client::getSocket()
 {
-	return this->sock;
+	return this->sock.get()->getSocket();
 }
 
 void Client::setSocket(int sock)
 {
 	this->sock.reset(new TCPSocket(sock));
+}
+
+sockaddr_in* Client::getHint()
+{
+	return &(this->sock.get()->hint);
+}
+
+void Client::setHint(sockaddr_in client_addr)
+{
+	this->sock.get()->hint = client_addr;
 }
 
 void Client::disconnect()

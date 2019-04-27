@@ -14,8 +14,11 @@ class Client
 		Client(std::shared_ptr<TCPSocket> sock);
 		~Client();
 
-		std::shared_ptr<TCPSocket> getSocket();
+		int getSocket();
 		void setSocket(int sock);
+		
+		sockaddr_in* getHint();
+		void setHint(sockaddr_in client_addr);
 
 		void disconnect();
 

@@ -22,7 +22,7 @@ Master::Master(int worldCount)
 		cstr[config["ip"].size() - 1] = '\0';
 		
 		std::cout << "Launching login server" << '\n';
-		this->loginServer.reset(new LoginServer(cstr, std::stoi(config["loginserver.port"]), this, 0));
+		this->loginServer.reset(new LoginServer(cstr, std::stoi(config["loginserver.port"]), this, 0));	
 	}
 	catch(std::exception& e)
 	{
@@ -43,58 +43,63 @@ void Master::run()
 {
 	using namespace std::chrono_literals;
 
-	try
-	{
-		//this->loginServer.reset(new LoginServer(this->IP, 8484, std::make_shared<Master>(this), 1984));
-	}
-	catch(std::exception& e)
-	{
-		std::cerr << "Exception thrown in Master::run" << '\n';
-	}//this->loginServer->run();
-	// Create and launch login server thread	
-	std::future<bool> future = std::async(std::launch::async, &LoginServer::run, this->loginServer.get());
-/*	for(int i = 0; i < master->getWorldCount(); ++i)
-	{
-		std::cout << "Launching world " << i << '\n';
-		World* world = new World(master, i, 3);
-		for(int j = 0; j < world->getChannelCount(); ++j)
-		{
-			std::cout << "    Launching channel " << j << " on world " << i << '\n';
-			std::thread channelServerThread(&launchChannelServer, master, world, j, 7575 + j + (20 * 1));
-			channelServerThread.detach();
-		}
-		master->addWorld(world);
-	}
+	//std::future<bool> future = std::async(std::launch::async, &LoginServer::run, this->loginServer.get());
 	
-*/
-
-	while(true)
+	if(this->loginServer.get()->getStatus() == ONLINE)
 	{
-	//	if(future.wait_for(0ms) == std::future_status::ready)
-	//	{
-	//		std::cout << "Login Thread closed" << '\n';
-	//	}
-		//if(strcmp(command,"exit") == 0)
-		/*if(cmd == "exit")
-		{
-			std::lock_guard<std::mutex> lock(this->mutex);
-			this->serverAlertQueue->push(1);
-			break;
-		}*/
-		std::string cmd;
-		std::cin.clear();
-		std::cin.sync();
-		std::cout << "> ";
-	//	std::getline(std::cin, cmd);
-		std::cin >> cmd;
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		if(cmd == "exit")
-		{
-			break;
-		}
-	}
+		std::thread loginThread = std::thread{[this](){
+			this->loginServer.get()->run();
+		}};
 
-	sleep(3);
+		// Create and launch login server thread
+		while(true)
+		{
+		/*
+		 	if(future.wait_for(0ms) == std::future_status::ready)
+			{
+				std::cout << "Login Thread closed" << '\n';
+			}
+		*/
+			std::string cmd;
+			std::cout << "> ";
+			std::getline(std::cin, cmd);
+			if(cmd == "exit")
+			{
+				//std::lock_guard<std::mutex> lock(this->mutex);
+				this->mutex.lock();
+				this->serverAlertQueue->push(1);
+				this->mutex.unlock();
+
+				// unsafe exit need to wait for server shutdown
+				std::cout << "Joining loginthread\n";
+				loginThread.join();
+				std::cout << "Loginthread close\n";
+				break;
+			}
+		}
+
+	/*
+ 		for(int i = 0; i < master->getWorldCount(); ++i)
+		{
+			std::cout << "Launching world " << i << '\n';
+			World* world = new World(master, i, 3);
+			for(int j = 0; j < world->getChannelCount(); ++j)
+			{
+				std::cout << "    Launching channel " << j << " on world " << i << '\n';
+				std::thread channelServerThread(&launchChannelServer, master, world, j, 7575 + j + (20 * 1));
+				channelServerThread.detach();
+			}
+			master->addWorld(world);
+		}	
+	*/
+
+		sleep(3);
+	}
+	else
+	{
+		std::cout << "LoginServer could not boot\n";
+		sleep(5);
+	}
 }
 
 void Master::shutdown()
@@ -149,6 +154,7 @@ World* Master::getWorld(int id)
 
 bool Master::checkChannelsOnline()
 {
+	/*
 	std::for_each(this->worlds.get()->begin(), this->worlds.get()->end(),[](World* world)
 	{
 		if(world->getChannelsOnline() > 0)
@@ -156,6 +162,7 @@ bool Master::checkChannelsOnline()
 			return false;
 		}
 	});
+	*/
 	return true;
 }
 

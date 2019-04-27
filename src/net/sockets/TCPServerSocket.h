@@ -12,7 +12,7 @@
 
 class Client;
 
-using Connections = std::map<std::shared_ptr<Client>, std::thread&>;
+using Connections = std::map<std::shared_ptr<Client>, std::shared_ptr<std::thread>>;
 
 enum ServerStatus
 {
@@ -48,7 +48,7 @@ class TCPServerSocket: public TCPSocket
 	
 		int getConnectionsLength();
 		Connections* getConnections();
-		void addConnection(std::shared_ptr<Client> client, std::thread &thread);
+		void addConnection(std::shared_ptr<Client> client, std::shared_ptr<std::thread> thread);
 		void removeConnection(std::shared_ptr<Client> client);
 
 	private:

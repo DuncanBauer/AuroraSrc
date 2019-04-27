@@ -25,17 +25,19 @@ bool LoginServer::run()
 	// Run until shutdown command is sent
 	while(true)
 	{	
+		std::cout << "Server Queue Length: " << this->getServerAlertQueue()->size() << '\n';
+		std::cout << "Connections Length: " << this->getConnections()->size() << '\n';
 		// Reads and executes server commands
-		if(this->getMaster()->serverAlertQueue->size() > 0)
+		if(this->getServerAlertQueue()->size() > 0)
 		{
-			//std::cout << this->getMaster()->serverAlertQueue->size() << '\n';
-			std::lock_guard<std::mutex> lock(this->getMaster()->mutex);
-			//if(!this->getMaster()->checkChannelsOnline())
-			//{
-			std::cout << "Shutting down login server" << '\n';
-				//this->alertServer(1);
+			std::for_each(this->getConnections()->begin(), this->getConnections()->end(), [](auto connection)
+			{
+				connection.second->join();
+				std::cout << "Loginworkerthread closed\n";
+			});
+			
+			std::cout << "CMD: exit loginserver\n";
 			break;
-			//}
 		}
 
 		// Set up for new connection
@@ -47,75 +49,55 @@ bool LoginServer::run()
 
 		struct pollfd *fds;
 		int fdcount = this->getConnectionsLength() + 1;
+		
 		fds = (pollfd*)malloc(sizeof(struct pollfd) * fdcount);
-
 		fds[0].fd = this->getSocket();
-		fds[0].events = POLLIN | POLLOUT;
-		//fds[0].events |= POLLOUT;
+		fds[0].events = POLLIN;
 		
 		int j = 0;
 		Connections* temp = this->getConnections();
-		// Checks for pending connections and connects the first one
 		std::for_each(temp->begin(), temp->end(), [temp, &fds, &j](auto connection) 
 		{
-		//	fds[j + 1].fd = temp->at(connection.first)->getSocket()->getSocket();
-			fds[j + 1].fd = connection.first->getSocket()->getSocket();
-		//	fds[j + 1].events |= POLLOUT;
-			fds[j + 1].events = POLLIN | POLLOUT;
+			fds[j + 1].fd = connection.first->getSocket();
+			fds[j + 1].events = POLLIN;
 			j++;
 		});
-
-		
-		if(poll(fds, fdcount, this->POLL_TIMEOUT))
-		{
-			client->setSocket(accept(this->getSocket(),
-				         (sockaddr*) &client_addr, 
-					 &clientSize));
-
-			std::cout << "Socket: " << client->getSocket().get()->getSocket() << '\n';
 	
-			//if(client->getSocket().get()->getSocket() != -1 && client->getSocket().get()->getSocket() != 0)
-			if(client->getSocket().get()->getSocket() > -1)
+		try
+		{
+			if(poll(fds, fdcount, this->POLL_TIMEOUT))
 			{
-				// Spawn client on new thread
-				std::cout << "Client connected" << '\n';
-			
-				//this->addConnection(client, std::thread([this, client]()
-				//{
-				//	this->spawnWorker(client);
-				//}));
-				loginWorkerThread = std::thread([this, client]()
-				{ 
-					this->spawnWorker(client); 
-				});
-				//this->addConnection(client, loginWorkerThread);
+				int sock = accept(this->getSocket(),
+					         (sockaddr*) &client_addr, 
+						 &clientSize);
+				if(sock > -1)
+				{
+					client->setSocket(sock);
+					client->setHint(client_addr);
+					char str[INET_ADDRSTRLEN];
+					inet_ntop(AF_INET, &(client->getHint()->sin_addr), str, INET_ADDRSTRLEN);
+					std::cout << "Client connected" << '\n';
+					std::cout << "Socket: " << client->getSocket() << '\n';
+					std::cout << "Port: " << client->getHint()->sin_port << '\n';
+					std::cout << "IP: " << str << '\n';
+					try
+					{
+						this->spawnWorker(client); 
+					}
+					catch(const std::exception& ex)
+					{
+						std::cout << ex.what() << '\n';
+					}
+				}
 			}
 		}
-/*
-		if(client->getSocket().get()->getSocket() != -1 && client->getSocket().get()->getSocket() != 0)
-	//	if(client->getSocket().get()->getSocket() >= 0)
+		catch(const std::exception& ex)
 		{
-			std::cout << client->getSocket()->getSocket() << '\n';
-			// Spawn client on new thread
-			std::cout << "Client connected" << '\n';
-		
-			loginWorkerThread = std::thread([=]
-			{ 
-				this->spawnWorker(client); 
-			});
-			this->addConnection(client, loginWorkerThread);
+			std::cout << ex.what() << '\n';
 		}
-*/
 		free(fds);
 	}
-
-	std::for_each(this->getConnections()->begin(), this->getConnections()->end(), [](auto connection)
-	{
-		connection.second.join();
-	});
-	
 	this->disconnect();
-	std::cout << "Login server shutting down" << '\n';
 	return true;
 }
 
@@ -126,6 +108,7 @@ bool LoginServer::connect()
 
 bool LoginServer::disconnect()
 {
+	std::cout << "Login server shutting down" << '\n';
 	this->setStatus(OFFLINE);
 	return true;
 }
@@ -151,9 +134,17 @@ bool LoginServer::alertServer(int command)
 
 bool LoginServer::spawnWorker(std::shared_ptr<Client> client)
 {
-	LoginWorker loginWorker = LoginWorker(this, client);
-//	workers.get()->emplace(workers.get()->size(), std::make_shared<LoginWorker>(loginWorker));
-//	loginWorker.run();
+	std::shared_ptr<std::thread> loginWorkerThread = std::make_shared<std::thread>([this, client]() { 
+		LoginWorker loginWorker = LoginWorker(this, client);
+		loginWorker.run();
+	});	
+	this->addConnection(std::move(client), std::move(loginWorkerThread));
+	
+	
+	
+	//workers.get()->emplace(workers.get()->size(), std::make_shared<LoginWorker>(loginWorker));
+	
+	
 	return true;
 }
 

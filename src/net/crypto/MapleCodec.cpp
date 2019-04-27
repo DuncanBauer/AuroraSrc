@@ -15,9 +15,10 @@ void MapleCodec::encode(PacketStream packet)
 
 void MapleCodec::decode(PacketStream packet)
 {
-	if(this->status == 0 && packet.getPacket().length > 4)
+/*	if(this->status == 0 && packet.getPacket().length > 4)
 	{
 		int header = packet.readInt();
 		
 	}
+*/
 }
