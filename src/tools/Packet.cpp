@@ -5,6 +5,12 @@ Packet::Packet()
 	this->length = 0;
 }
 
+Packet::Packet(std::string bytes)
+{
+	std::copy(bytes.begin(), bytes.end(), std::back_inserter(this->bytes));
+	this->length = bytes.size();
+}
+
 Packet::Packet(std::vector<byte> bytes, int length)
 {
 	this->bytes = bytes;

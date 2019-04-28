@@ -25,6 +25,7 @@ class LoginWorker : public GenericWorker
 		virtual void stop();
 
 	private:
+		const int POLL_TIMEOUT = 500;
 		LoginServer* loginServer;
 		std::shared_ptr<TCPClientSocket> client;
 };

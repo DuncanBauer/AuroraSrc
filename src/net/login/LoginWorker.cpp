@@ -57,10 +57,9 @@ void LoginWorker::run()
 			int count = 1;
 			fds = (pollfd*)malloc(sizeof(pollfd) * count);
 			fds[0].fd = this->client->getSocket();
-			fds[0].events = POLLOUT;
+			fds[0].events = POLLIN;
 
-			int res = poll(fds, count, 500);
-			std::cout << "POLL RES: " << res << '\n';
+			int res = poll(fds, count, this->POLL_TIMEOUT);
 			if(res)
 			{
 				byte buff[512];
@@ -68,8 +67,6 @@ void LoginWorker::run()
 				bytesRecv = recv(client->getSocket(), buff, 512, 0);
 				std::string temp = reinterpret_cast<char *>(buff);
 				data = data + temp;
-				std::cout << "Bytes recv: " << bytesRecv << '\n';
-				std::cout << "Data: " << buff << '\n';
 		
 				// Ends reading when the packet is finished or the client disconnects
 				if(bytesRecv == -1 || bytesRecv == 0)
@@ -80,39 +77,22 @@ void LoginWorker::run()
 			}
 			else
 			{
-				std::cout << "None recv\n";
 				break;
 			}
 		}
-		std::vector<byte> vec;
-		Packet packet;
-		std::copy(data.begin(), data.end(), std::back_inserter(vec));
-		packet.bytes = vec;
-		packet.length = vec.size();
-		std::cout << "Data: " << data << "\n\n\n";
-		std::cout << "Decoded: " << MapleCodec::decode(packet) << '\n';
 
 		// If the client has disconnected break the loop and let thread end
 		if(bytesRecv == 0)
 		{
-			std::cout << "Ending thread\n";
 			break;
 		}
 
-		std::cout << "Not ending thread\n";
+		// Decode the packet
 		if(data.size() > 0)
 		{
-			std::vector<byte> vec;
-			Packet packet;
-			std::copy(data.begin(), data.end(), std::back_inserter(vec));
-			packet.bytes = vec;
-			packet.length = vec.size();
-			std::cout << "Data: " << data << "\n\n\n";
+			Packet packet = Packet(data);
+			std::cout << "Data: " << data << '\n';
 			std::cout << "Decoded: " << MapleCodec::decode(packet) << '\n';
-		}
-		else
-		{
-			std::cout << "Size is 0???\n";
 		}
 
 	}
