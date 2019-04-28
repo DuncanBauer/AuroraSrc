@@ -48,20 +48,25 @@ void LoginWorker::run()
 			break;
 		}
 
-		// Receive entire packet
+		// Loop until we receive complete packet or client disconnects
 		std::string data = "";
 		int bytesRecv = 1;
 		while(true)
 		{
+			// Initialize file descriptor
 			struct pollfd *fds;
 			int count = 1;
 			fds = (pollfd*)malloc(sizeof(pollfd) * count);
 			fds[0].fd = this->client->getSocket();
+			// RECV: So check for incoming data
 			fds[0].events = POLLIN;
 
+			// Check for data
 			int res = poll(fds, count, this->POLL_TIMEOUT);
+			// Data available to receive
 			if(res)
 			{
+				// Grab data and append to rest of string
 				byte buff[512];
 				memset(buff, 0, 512);
 				bytesRecv = recv(client->getSocket(), buff, 512, 0);
@@ -71,10 +76,10 @@ void LoginWorker::run()
 				// Ends reading when the packet is finished or the client disconnects
 				if(bytesRecv == -1 || bytesRecv == 0)
 				{
-					std::cout << "End packet\n";
 					break;
 				}
 			}
+			// No data to receive, break packet loop
 			else
 			{
 				break;
