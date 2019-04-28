@@ -2,7 +2,7 @@
 #define CHANNELWORKER_H
 
 
-#include "../../tools/packets/MaplePacketCreator.h"
+#include "../../tools/MaplePacketCreator.h"
 #include "../sockets/TCPClientSocket.h"
 #include "../GenericWorker.h"
 
@@ -16,7 +16,7 @@ class ChannelWorker : public GenericWorker
 		ChannelWorker();
 		ChannelWorker(std::shared_ptr<ChannelServer> channelServer, std::shared_ptr<TCPClientSocket> client);
 		virtual ~ChannelWorker();
-		
+
 		virtual void initialize();
 		virtual void run();
 		virtual void connect();

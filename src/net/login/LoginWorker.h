@@ -2,7 +2,7 @@
 #define LOGINWORKER_H
 
 
-#include "../../tools/packets/MaplePacketCreator.h"
+#include "../../tools/MaplePacketCreator.h"
 #include "../sockets/TCPClientSocket.h"
 #include "../GenericWorker.h"
 

@@ -1,6 +1,6 @@
 #include "Master.h"
 
-#include "tools/fileIO/ConfigParser.h"
+#include "tools/ConfigParser.h"
 
 #include <limits>
 #include <ios>
@@ -10,7 +10,7 @@
 Master::Master(int worldCount)
 {
 	try
-	{	
+	{
 		std::map<std::string, std::string> config = ConfigParser::getValuesFromFile("master.conf");
 		this->worldCount = worldCount;
 		this->serverAlertQueue.reset(new AlertQueue());
@@ -19,9 +19,9 @@ Master::Master(int worldCount)
 		char cstr[config["ip"].size() + 1];
 		config["ip"].copy(cstr, config["ip"].size() + 1);
 		cstr[config["ip"].size() - 1] = '\0';
-		
+
 		std::cout << "Launching login server" << '\n';
-		this->loginServer.reset(new LoginServer(cstr, std::stoi(config["loginserver.port"]), this, 0));	
+		this->loginServer.reset(new LoginServer(cstr, std::stoi(config["loginserver.port"]), this, 0));
 	}
 	catch(std::exception& e)
 	{
@@ -43,7 +43,7 @@ void Master::run()
 	using namespace std::chrono_literals;
 
 	//std::future<bool> future = std::async(std::launch::async, &LoginServer::run, this->loginServer.get());
-	
+
 	if(this->loginServer->getStatus() == ONLINE)
 	{
 		std::thread loginThread = std::thread{[this](){
@@ -86,7 +86,7 @@ void Master::run()
 				channelServerThread.detach();
 			}
 			master->addWorld(world);
-		}	
+		}
 	*/
 
 		sleep(3);
@@ -99,7 +99,7 @@ void Master::run()
 }
 
 void Master::shutdown()
-{	
+{
 	try
 	{
 		for(unsigned int i = 0; i < this->serverAlertQueue.get()->size(); ++i)

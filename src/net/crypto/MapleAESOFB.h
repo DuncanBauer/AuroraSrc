@@ -1,7 +1,7 @@
 #ifndef MAPLEAESOFB_H
 #define MAPLEAESOFB_H
 
-#include "../../tools/packets/Packet.h"
+#include "../../tools/Packet.h"
 
 class MapleAESOFB
 {
@@ -10,6 +10,7 @@ class MapleAESOFB
 		~MapleAESOFB();
 
 		bool checkPacketHeader(int header);
+        
 	private:
 		byte* iv;
 };

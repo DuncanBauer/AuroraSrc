@@ -1,19 +1,12 @@
 #ifndef MAPLECODEC_H
 #define MAPLECODEC_H
 
-#include "../../tools/packets/PacketStream.h"
+#include "../../tools/Packet.h"
 
-class MapleCodec
+namespace MapleCodec
 {
-	public:
-		MapleCodec();
-		~MapleCodec();
-		
-		void encode(PacketStream packet);
-		void decode(PacketStream packet);
-
-	private:
-		int status;
+		byte * encode(Packet packet);
+		byte * decode(Packet packet);
 };
 
 #endif

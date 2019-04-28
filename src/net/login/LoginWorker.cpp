@@ -1,6 +1,8 @@
 #include "LoginWorker.h"
 #include "LoginServer.h"
 
+#include "../crypto/MapleCodec.h"
+
 #include <queue>
 
 LoginWorker::LoginWorker()
@@ -45,19 +47,42 @@ void LoginWorker::run()
 			break;
 		}
 
-		byte buff[512];
-		memset(buff, 0, 512);
-
-		int bytesRecv = recv(client->getSocket(), buff, 512, 0);
-		if(bytesRecv > 0)
-		{
-			std::cout << "# Bytes: " << bytesRecv << '\n';
-			std::cout << "Data: " << buff << '\n';
+        // Receive entire packet
+        std::string data = "";
+        int bytesRecv = 0;
+		while(true)
+        {
+    		byte buff[512];
+    		memset(buff, 0, 512);
+    	    bytesRecv = recv(client->getSocket(), buff, 512, 0);
+            std::string temp = reinterpret_cast<char *>(buff);
+            data = data + temp;
+            std::cout << "Bytes recv: " << bytesRecv << '\n';
+            // Ends reading when the packet is finished or the client disconnects
+            if(bytesRecv == -1 || bytesRecv == 0)
+            {
+                std::cout << "End packet\n";
+                break;
+            }
 		}
-		else if(bytesRecv == 0)
+
+        // If the client has disconnected break the loop and let thread end
+        if(bytesRecv == 0)
 		{
 			break;
 		}
+
+        if(data.size() > 0)
+        {
+            std::vector<byte> vec;
+            Packet packet;
+            std::copy(data.begin(), data.end(), std::back_inserter(vec));
+            packet.bytes = vec;
+            packet.length = vec.size();
+            std::cout << "Data: " << data << "\n\n\n";
+            std::cout << "Decoded: " << MapleCodec::decode(packet) << '\n';
+        }
+
 	}
 	this->disconnect();
 }

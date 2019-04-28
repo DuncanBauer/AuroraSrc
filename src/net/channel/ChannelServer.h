@@ -12,7 +12,7 @@
  *
  */
 
-#include "../../tools/packets/PacketStream.h"
+#include "../../tools/PacketStream.h"
 #include "ChannelWorker.h"
 #include "../GenericMapleServer.h"
 
@@ -22,7 +22,7 @@ class ChannelServer : public GenericMapleServer
 	public:
 		ChannelServer(char* ip, int port, Master* master, int id);
 		virtual ~ChannelServer();
-		
+
 		virtual bool run();
 		virtual bool connect();
 		virtual bool disconnect();

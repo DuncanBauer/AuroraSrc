@@ -7,16 +7,14 @@ WORLD_SOURCES = src/net/sockets/*.cpp \
 		src/net/channel/*.cpp \
 		src/net/crypto/*.cpp \
 		src/net/*.cpp \
-	        src/tools/*.cpp \
-		src/tools/packets/*.cpp \
-		src/tools/fileIO/*.cpp \
+	    src/tools/*.cpp \
 		src/Master.cpp \
 		src/main.cpp
 
 TOOLS_SOURCES = src/maintools.cpp \
 	        src/tools/*.cpp \
 		src/tools/packets/*.cpp
-	       
+
 FILEIO_SOURCES = src/tools/fileIO/*.cpp \
 		 src/mainfileIO.cpp
 
@@ -24,7 +22,7 @@ OBJECTS=$(SOURCES:.cpp=.o)
 	SERVER_EXEC=server
 	CLIENT_EXEC=client
 
-all : 
+all :
 	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o master
 	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o toolstest
 	$(CC) $(CFLAGS) $(FILEIO_SOURCES) -o fileio
@@ -35,10 +33,10 @@ master :
 tools :
 	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o toolstest
 
-fileio: 
+fileio:
 	$(CC) $(CFLAGS) $(FILEIO_SOURCES) -o fileio
 
-clean : 
+clean :
 	rm -f toolstest
 	rm -f fileio
 	rm -f master
