@@ -11,23 +11,21 @@
 
 TCPServerSocket::TCPServerSocket(char* ip, int port, int id)
 {
-//	std::cout << "TCPServerSocket constructor called" << '\n';
 	this->setStatus(OFFLINE);
 	if(this->initialize(ip, port))
 	{	
-		std::cout << "Server Online \n";
-		this->setStatus(ONLINE);
+		this->setStatus(READY);
 	}
 	this->setID(id);
 }
 
 TCPServerSocket::~TCPServerSocket()
 {
-//	std::cout << "TCPServerSocket destructor called" << '\n';
 }
 
 bool TCPServerSocket::initialize(char* address, int port)
 {
+	std::cout << "INITIALIZING SERVER\n";
 	this->setStatus(INITIALIZING);
 	this->setSocket(socket(AF_INET, SOCK_STREAM, 0));
 	if(this->getSocket() < 0)

@@ -20,7 +20,7 @@ Master::Master(int worldCount)
 		config["ip"].copy(cstr, config["ip"].size() + 1);
 		cstr[config["ip"].size() - 1] = '\0';
 
-		std::cout << "Launching login server" << '\n';
+		std::cout << "SPINNING UP LOGINSERVER\n";
 		this->loginServer.reset(new LoginServer(cstr, std::stoi(config["loginserver.port"]), this, 0));
 	}
 	catch(std::exception& e)
@@ -40,30 +40,22 @@ bool Master::initialize()
 
 void Master::run()
 {
-	using namespace std::chrono_literals;
-
-	//std::future<bool> future = std::async(std::launch::async, &LoginServer::run, this->loginServer.get());
-
-	if(this->loginServer->getStatus() == ONLINE)
+	if(this->loginServer->getStatus() == READY)
 	{
+		// Create and launch login server thread
+		std::cout << "LOGINSERVER ONLINE\n";
 		std::thread loginThread = std::thread{[this](){
 			this->loginServer->run();
 		}};
 
-		// Create and launch login server thread
 		while(true)
 		{
-		/*
-		 	if(future.wait_for(0ms) == std::future_status::ready)
-			{
-				std::cout << "Login Thread closed" << '\n';
-			}
-		*/
 			std::string cmd;
 			//std::cout << "> ";
 			std::getline(std::cin, cmd);
 			if(cmd == "exit")
 			{
+				std::cout << "CMD: SHUTDOWN\n";
 				this->mutex.lock();
 				this->serverAlertQueue->push(1);
 				this->mutex.unlock();

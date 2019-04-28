@@ -13,28 +13,25 @@
 
 LoginServer::LoginServer(char* ip, int port, Master* master, int id) : GenericMapleServer(ip, port, master, id)
 {
-//	std::cout << "LoginServer constructor called" << '\n';
 	std::map<std::string, std::string> config = ConfigParser::getValuesFromFile("login.conf");
-
 	this->POLL_TIMEOUT = std::stoi(config["loginserver.poll.timeout"]);
-
 	this->connections.reset(new LoginConnections());
 }
 
 LoginServer::~LoginServer()
 {
-//	std::cout << "LoginServer destructor called" << '\n';
 }
 
 bool LoginServer::run()
 {
+	this->setStatus(ONLINE);
 	// Run until shutdown command is sent
 	while(true)
 	{
 		// Reads and executes server commands
 		if(this->getServerAlertQueue()->size() > 0)
 		{
-			std::cout << "Wait for LoginWorkers to finish\n";
+			std::cout << "WAITING FOR CONNECTIONS TO TERMINATE\n";
 			while(true)
 			{
 				if(this->connections->size() == 0)
@@ -42,8 +39,6 @@ bool LoginServer::run()
 					break;
 				}
 			}
-			std::cout << "CMD: exit loginserver\n";
-			std::cout << "Loginworkerthread closed\n";
 			break;
 		}
 
@@ -129,7 +124,7 @@ bool LoginServer::connect()
 
 bool LoginServer::disconnect()
 {
-	std::cout << "Login server shutting down" << '\n';
+	std::cout << "LOGINSERVER SHUTTING DOWN\n" << '\n';
 	this->setStatus(OFFLINE);
 	return true;
 }

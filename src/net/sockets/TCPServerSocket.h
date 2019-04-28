@@ -16,6 +16,7 @@ enum ServerStatus
 {
 	OFFLINE,
 	INITIALIZING,
+	READY,
 	ONLINE
 };
 
