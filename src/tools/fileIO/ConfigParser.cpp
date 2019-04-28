@@ -5,14 +5,6 @@
 #include <unistd.h>
 #include <stdio.h>
 
-ConfigParser::ConfigParser()
-{
-}
-
-ConfigParser::~ConfigParser()
-{
-}
-
 std::map<std::string, std::string> ConfigParser::getValuesFromFile(std::string filename)
 {
 	std::map<std::string, std::string> config;

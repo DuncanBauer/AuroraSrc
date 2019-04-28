@@ -12,8 +12,6 @@
 
 class TCPClientSocket;
 
-using Connections = std::map<std::shared_ptr<TCPClientSocket>, std::shared_ptr<std::thread>>;
-
 enum ServerStatus
 {
 	OFFLINE,
@@ -25,7 +23,7 @@ enum ServerStatus
 class TCPServerSocket: public TCPSocket 
 {
 	public:
-		const int POLL_TIMEOUT = 500;
+		int POLL_TIMEOUT = 500;
 
 		TCPServerSocket(char* ip, int port, int id);
 		virtual ~TCPServerSocket();
@@ -37,7 +35,7 @@ class TCPServerSocket: public TCPSocket
 		virtual bool reconnect();
 		virtual bool alertServer(int command);
 		virtual bool spawnWorker(std::shared_ptr<TCPClientSocket> client);
-	
+
 		int getID();
 		void setID(int id);
 		
@@ -46,13 +44,7 @@ class TCPServerSocket: public TCPSocket
 	
 		std::mutex* getMutex();
 	
-		int getConnectionsLength();
-		Connections* getConnections();
-		void addConnection(std::shared_ptr<TCPClientSocket> client, std::shared_ptr<std::thread> thread);
-		void removeConnection(std::shared_ptr<TCPClientSocket> client);
-
 	private:
-		std::unique_ptr<Connections> connections;
 		ServerStatus status;
 		std::mutex mtx;
 		int id;

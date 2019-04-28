@@ -1,13 +1,13 @@
+#ifndef CONFIGPARSER_H
+#define CONFIGPARSER_H
+
 #include <string>
 #include <map>
 
 
-class ConfigParser
+namespace ConfigParser
 {
-	public:
-		ConfigParser();
-		~ConfigParser();
-		static std::map<std::string, std::string> getValuesFromFile(std::string filename);
-
-	private:
+	std::map<std::string, std::string> getValuesFromFile(std::string filename);
 };
+
+#endif

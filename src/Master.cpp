@@ -11,8 +11,7 @@ Master::Master(int worldCount)
 {
 	try
 	{	
-		ConfigParser configparser = ConfigParser();
-		std::map<std::string, std::string> config = configparser.getValuesFromFile("master.conf");
+		std::map<std::string, std::string> config = ConfigParser::getValuesFromFile("master.conf");
 		this->worldCount = worldCount;
 		this->serverAlertQueue.reset(new AlertQueue());
 		this->worlds.reset(new Worlds());
@@ -65,7 +64,6 @@ void Master::run()
 			std::getline(std::cin, cmd);
 			if(cmd == "exit")
 			{
-				//std::lock_guard<std::mutex> lock(this->mutex);
 				this->mutex.lock();
 				this->serverAlertQueue->push(1);
 				this->mutex.unlock();

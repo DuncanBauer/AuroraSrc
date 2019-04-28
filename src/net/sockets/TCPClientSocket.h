@@ -13,6 +13,7 @@ class TCPClientSocket : public TCPSocket
 		TCPClientSocket(int sock);
 		~TCPClientSocket();
 
+		bool closeSocket();
 		void disconnect();
 };
 

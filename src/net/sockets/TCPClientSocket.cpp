@@ -13,7 +13,11 @@ TCPClientSocket::TCPClientSocket(int sock) : TCPSocket(sock)
 
 TCPClientSocket::~TCPClientSocket()
 {
-	std::cout << "TCPClientSocket destructor called\n";
+}
+
+bool TCPClientSocket::closeSocket()
+{
+	return true;
 }
 
 void TCPClientSocket::disconnect()

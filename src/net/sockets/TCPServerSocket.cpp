@@ -1,6 +1,7 @@
 #include "TCPServerSocket.h"
 #include "TCPClientSocket.h"
 
+#include <sys/ioctl.h>
 #include <iterator>
 #include <poll.h>
 #include <algorithm>
@@ -17,52 +18,53 @@ TCPServerSocket::TCPServerSocket(char* ip, int port, int id)
 		std::cout << "Server Online \n";
 		this->setStatus(ONLINE);
 	}
-	this->connections.reset(new Connections());
 	this->setID(id);
 }
 
 TCPServerSocket::~TCPServerSocket()
 {
 //	std::cout << "TCPServerSocket destructor called" << '\n';
-	try
-	{
-		if(!this->connections.get()->empty())
-		{
-			this->connections.get()->clear();
-		}
-		this->connections.reset();
-		close(this->getSocket());
-	}
-	catch(std::exception& e)
-	{
-		std::cerr << "Exception thrown in TCPSocketServer destructor" << '\n';
-	}
 }
 
 bool TCPServerSocket::initialize(char* address, int port)
 {
 	this->setStatus(INITIALIZING);
 	this->setSocket(socket(AF_INET, SOCK_STREAM, 0));
-	if(this->getSocket() == -1)
+	if(this->getSocket() < 0)
 	{
-		std::cerr << "Can\'t create socket" << '\n';
-		return -1;
+		std::cerr << "Can\'t create socket\n";
+		return false;
 	}
 
 	this->getHint()->sin_family = AF_INET;
 	this->getHint()->sin_port = htons(port);
 	inet_pton(AF_INET, address, &(this->getHint()->sin_addr));
 
-	if(bind(this->getSocket(), (sockaddr*)(this->getHint()), sizeof(*this->getHint())) == -1)
+	int on = 1;
+	if(setsockopt(this->getSocket(), SOL_SOCKET, SO_REUSEADDR, (char *)&on, sizeof(on)) < 0)
 	{
-		std::cerr << "Couldn\'t bind socket to IP/PORT" << '\n';
+		std::cerr << "Couldn't set socket reusable\n";
 		this->setStatus(OFFLINE);
 		return false;
 	}
 
-	if(listen(this->getSocket(), SOMAXCONN) == -1)
+	if(ioctl(this->getSocket(), FIONBIO, (char *)&on) < 0)
+	{	
+		std::cerr << "Couldn't set socket nonblocking\n";
+		this->setStatus(OFFLINE);
+		return false;
+	}
+
+	if(bind(this->getSocket(), (sockaddr*)(this->getHint()), sizeof(*this->getHint())) < 0)
 	{
-		std::cerr << "Can\'t listen" << '\n';
+		std::cerr << "Couldn\'t bind socket to IP/PORT\n";
+		this->setStatus(OFFLINE);
+		return false;
+	}
+
+	if(listen(this->getSocket(), SOMAXCONN) < 0)
+	{
+		std::cerr << "Can\'t listen\n";
 		this->setStatus(OFFLINE);
 		return false;
 	}
@@ -160,31 +162,4 @@ void TCPServerSocket::setStatus(ServerStatus status)
 std::mutex* TCPServerSocket::getMutex()
 {
 	return &(this->mtx);
-}
-
-int TCPServerSocket::getConnectionsLength()
-{
-	return this->connections->size();
-}
-
-void TCPServerSocket::addConnection(std::shared_ptr<TCPClientSocket> client, std::shared_ptr<std::thread> thread)
-{
-	this->connections.get()->emplace(client, std::move(thread));
-}
-
-void TCPServerSocket::removeConnection(std::shared_ptr<TCPClientSocket> client)
-{
-	try
-	{
-		this->connections->erase(client);
-	}
-	catch(...)
-	{
-		std::cerr << "No connections to remove" << '\n';
-	}
-}
-
-Connections* TCPServerSocket::getConnections()
-{
-	return this->connections.get();
 }

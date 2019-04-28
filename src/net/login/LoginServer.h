@@ -12,11 +12,13 @@
  *
  */
 
+class TCPClientSocket;
+
 #include "../../tools/packets/PacketStream.h"
 #include "LoginWorker.h"
 #include "../GenericMapleServer.h"
 
-//using Workers = std::map<int, std::shared_ptr<LoginWorker>>;
+using LoginConnections = std::map<std::shared_ptr<TCPClientSocket>, std::shared_ptr<LoginWorker>>;
 
 class LoginServer : public GenericMapleServer
 {
@@ -30,9 +32,15 @@ class LoginServer : public GenericMapleServer
 		virtual bool reconnect();
 		virtual bool alertServer(int command);
 		virtual bool spawnWorker(std::shared_ptr<TCPClientSocket> client);
+		
+		void addConnection(std::shared_ptr<TCPClientSocket> client, std::shared_ptr<LoginWorker> worker);
+		void removeConnection(std::shared_ptr<TCPClientSocket> client);
+		LoginConnections* getConnections();
+		int getConnectionsLength();
 
 	private:
-//		std::unique_ptr<Workers> workers;
+		std::unique_ptr<LoginConnections> connections;
+
 };
 
 
