@@ -1,6 +1,7 @@
 OS:
-	Linux
+	Linux Ubuntu
+    Windows 10
 
 DEPENDENCIES:
-	Boost 1.62.0 (Untested with other versions)
-	
+    Python3
+    Crypto++

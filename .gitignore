@@ -1,9 +1,10 @@
 toolstest
 master
 fileio
-
 toolstest.exe
 master.exe
 fileio.exe
 
+wz/*
+src/lib/*
 *.swp
