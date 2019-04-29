@@ -4,7 +4,7 @@
 
 MapleAESOFB::MapleAESOFB(byte * key, byte * iv, _short mapleVersion) 
 {
-//	OFB_MODE<AES>::Encryption cipher;
+//	CryptoPP::OFB_MODE<CryptoPP::AES>::Encryption cipher;
 //	SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
 
 //	try {

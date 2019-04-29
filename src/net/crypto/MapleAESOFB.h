@@ -4,22 +4,25 @@
 #include "../../tools/Packet.h"
 
 #if defined(_WIN32)
-	#error "WIN32"
+	#warning "WIN32"
 	#include "../../lib/cryptopp/aes.h"
 	#include "../../lib/cryptopp/modes.h"
 	#include "../../lib/cryptopp/filters.h"
 #elif defined(_WIN64)
-	#error "WIN64"
+	#warning "WIN64"
+	#include "../../lib/cryptopp/aes.h"
+	#include "../../lib/cryptopp/modes.h"
+	#include "../../lib/cryptopp/filters.h"
+#elif defined(__CYGWIN__)
+	#warning "CYGWIN"
 	#include "../../lib/cryptopp/aes.h"
 	#include "../../lib/cryptopp/modes.h"
 	#include "../../lib/cryptopp/filters.h"
 #elif defined(__linux__)
-	#error "Linux"
+	#warning "Linux"
 	#include "cryptopp/aes.h"
 	#include "cryptopp/modes.h"
 	#include "cryptopp/filters.h"
-#else
-	#warning "Out"
 #endif
 
 
