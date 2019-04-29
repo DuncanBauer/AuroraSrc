@@ -23,9 +23,8 @@
 	#include "../../lib/cryptopp/filters.h"
 #elif defined(__linux__)
 	#warning "Linux"
-//	#include "cryptopp/cryptlib.h"
-	#include "cryptopp/aes.h"
 	#include "cryptopp/modes.h"
+	#include "cryptopp/aes.h"
 	#include "cryptopp/filters.h"
 #endif
 

@@ -12,14 +12,14 @@ endif
 
 CC = g++
 
-CFLAGS = -Wall -g -std=c++14 -pthread
+CFLAGS = -Wall -g -std=c++14 -lpthread
 $(info detected os is $(detected_os))
 ifeq ($(detected_os), Windows)
-	CFLAGS += -L. -lsrc/lib/cryptlib
+	CFLAGS += -Lsrc/lib/cryptopp -lcryptlib
 endif
 
 ifeq ($(detected_os), Other)
-	CFLAGS += -lcryptopp
+	CFLAGS += -L/usr/local/lib -l:libcryptopp.a
 endif
 
 WORLD_SOURCES = src/net/sockets/*.cpp \
