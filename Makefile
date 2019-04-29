@@ -9,14 +9,16 @@ else
 #	detected_os := $(patsubst MINGW%,MSYS,$(detected_os))
 endif
 
+
+
 CC = g++
 
 CFLAGS = -Wall -g -std=c++14 -pthread
 $(info detected os is $(detected_os))
 ifeq ($(detected_os), Windows)
-	#CFLAGS += -L. -lsrc/lib/cryptopp/x64/Output/Release/cryptlib
 	CFLAGS += -L. -lsrc/lib/cryptlib
 endif
+
 ifeq ($(detected_os), Other)
 	CFLAGS += -lcryptopp
 endif
@@ -31,28 +33,20 @@ WORLD_SOURCES = src/net/sockets/*.cpp \
 		src/main.cpp
 
 TOOLS_SOURCES = src/maintools.cpp \
-	        src/tools/*.cpp \
-		src/tools/packets/*.cpp
-
-FILEIO_SOURCES = src/tools/fileIO/*.cpp \
-		src/mainfileIO.cpp
+		src/net/crypto/*.cpp \
+	        src/tools/*.cpp 
 
 
 all :
-	$(CC) $(CFLAGS) $(WORLD_SOURCES) -L. -lsrc/lib/cryptopp/x64/Output/Release/cryptlib -o master
-	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o toolstest
-	$(CC) $(CFLAGS) $(FILEIO_SOURCES) -o fileio
+	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o master
+	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o tools
 
 master :
 	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o master
 
 tools :
-	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o toolstest
-
-fileio:
-	$(CC) $(CFLAGS) $(FILEIO_SOURCES) -o fileio
+	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o tools
 
 clean :
-	rm -f toolstest
-	rm -f fileio
+	rm -f tools
 	rm -f master

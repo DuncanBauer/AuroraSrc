@@ -7,21 +7,28 @@
 #include <algorithm>
 #include <unistd.h>
 
-Master::Master(int worldCount)
+Master::Master()
 {
 	try
 	{
+		// Save server config in case something bad happens later
 		std::map<std::string, std::string> config = ConfigParser::getValuesFromFile("master.conf");
-		this->worldCount = worldCount;
+		this->ip = config["ip"];
+		this->loginserverport = std::stoi(config["loginserver.port"]);
+		
+		this->MAPLE_VERSION = std::stoi(config["maple.version"]);
+		this->worldCount = std::stoi(config["world.count"]);
+
 		this->serverAlertQueue.reset(new AlertQueue());
 		this->worlds.reset(new Worlds());
-
-		char cstr[config["ip"].size() + 1];
-		config["ip"].copy(cstr, config["ip"].size() + 1);
-		cstr[config["ip"].size() - 1] = '\0';
+	
+		// Make cstr of ip to launch login server
+		char cstr[this->ip.size() + 1];
+		this->ip.copy(cstr, this->ip.size() + 1);
+		cstr[this->ip.size() - 1] = '\0';
 
 		std::cout << "SPINNING UP LOGINSERVER\n";
-		this->loginServer.reset(new LoginServer(cstr, std::stoi(config["loginserver.port"]), this, 0));
+		this->loginServer.reset(new LoginServer(cstr, this->loginserverport, this, 0));
 	}
 	catch(std::exception& e)
 	{
@@ -48,6 +55,21 @@ void Master::run()
 			this->loginServer->run();
 		}};
 
+	/*
+ 		for(int i = 0; i < master->getWorldCount(); ++i)
+		{
+			std::cout << "Launching world " << i << '\n';
+			World* world = new World(master, i, 3);
+			for(int j = 0; j < world->getChannelCount(); ++j)
+			{
+				std::cout << "    Launching channel " << j << " on world " << i << '\n';
+				std::thread channelServerThread(&launchChannelServer, master, world, j, 7575 + j + (20 * 1));
+				channelServerThread.detach();
+			}
+			master->addWorld(world);
+		}
+	*/
+
 		while(true)
 		{
 			std::string cmd;
@@ -65,28 +87,12 @@ void Master::run()
 				break;
 			}
 		}
-
-	/*
- 		for(int i = 0; i < master->getWorldCount(); ++i)
-		{
-			std::cout << "Launching world " << i << '\n';
-			World* world = new World(master, i, 3);
-			for(int j = 0; j < world->getChannelCount(); ++j)
-			{
-				std::cout << "    Launching channel " << j << " on world " << i << '\n';
-				std::thread channelServerThread(&launchChannelServer, master, world, j, 7575 + j + (20 * 1));
-				channelServerThread.detach();
-			}
-			master->addWorld(world);
-		}
-	*/
-
-		sleep(3);
+		this->shutdown();
 	}
 	else
 	{
 		std::cout << "LoginServer could not boot\n";
-		sleep(5);
+		sleep(3);
 	}
 }
 
@@ -99,6 +105,7 @@ void Master::shutdown()
 			this->serverAlertQueue.get()->pop();
 		}
 		this->worlds.get()->clear();
+		this->worlds.reset();
 		this->loginServer.reset();
 	}
 	catch(std::exception& e)

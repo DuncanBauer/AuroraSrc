@@ -13,7 +13,7 @@ using Worlds = std::vector<World*>;
 class Master
 {
 	public:
-		Master(int _worldCount);
+		Master();
 		~Master();
 
 		bool initialize();
@@ -36,9 +36,12 @@ class Master
 		void addWorld(World* world);
 		void removeWorld(World* world);
 	
-		int worldCount;
 		std::string ip;
 		int loginserverport;
+		
+		_short MAPLE_VERSION;
+		int worldCount;
+		
 		std::mutex mutex;
 		std::unique_ptr<AlertQueue> serverAlertQueue;
 		std::unique_ptr<LoginServer> loginServer;

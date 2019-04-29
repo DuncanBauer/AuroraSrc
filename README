@@ -16,7 +16,8 @@ SETUP:
 	1. Install g++ if not installed
 	2. Install Crypto++
 	3. Install MySQL-Connector-8
-	4. Install Pybind
+	4. Install Boost Libraries
+	5. Install Pybind
 
 
 INSTALLING G++:
@@ -28,7 +29,7 @@ INSTALLING CRYPTO++:
 	Linux: Open terminal and run command 'sudo apt install libcrypto++-dev libcrypto++-doc libcrypto++-utils'
 	
 	Windows: a. If running on 32-bit system, download Crypto++ source and build the lib in Visual Studio. Replace src/lib/cryptlib.dll with newly build 32-bit version
-			 b. If running on 64-bit system, the 64-bit lib and source is already included
+		 b. If running on 64-bit system, the 64-bit lib and source is already included
 	
 INSTALLING MYSQL-CONNECTOR:
 	Linux: Open terminal and run

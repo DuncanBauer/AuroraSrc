@@ -1,9 +1,7 @@
-toolstest
+tools
 master
-fileio
-toolstest.exe
+tools.exe
 master.exe
-fileio.exe
 
 wz/*
 *.swp

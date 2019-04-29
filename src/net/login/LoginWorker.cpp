@@ -95,9 +95,16 @@ void LoginWorker::run()
 		// Decode the packet
 		if(data.size() > 0)
 		{
+			PacketStream ps;
 			Packet packet = Packet(data);
-			std::cout << "Data: " << data << '\n';
+			ps.setPacket(packet);
+			std::ostringstream str = ps.getByteStreamHex();
+
+
+		//	std::cout << "Packet Length: " <<   << '\n';
+			std::cout << "Raw Data: " << data << '\n';
 			std::cout << "Decoded: " << MapleCodec::decode(packet) << '\n';
+			std::cout << "Decoded HEX: " << str.str().c_str() << '\n';
 		}
 
 	}
