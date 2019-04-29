@@ -9,16 +9,33 @@ DEPENDENCIES:
 	Pybind
 
 GIT REPO INCLUDES:
-	WINDOWS:
-		64-bit libcrypto.lib
-		crypto++ source files
+		64-bit libcrypto.lib   (LINUX users may ignore)
+		crypto++ source files  (LINUX users may ignore)
 	
 SETUP ON LINUX:
-	1. Install g++ with command 'sudo apt install g++' if not installed
-	2. Install cryptopp with command 'sudo apt install libcrypto++-dev libcrypto++-doc libcrypto++-utils
+	1. Install g++ if not installed
+	2. Install Crypto++
+	3. Install MySQL-Connector-8
 
 SETUP ON WINDOWS:
 	1. Install g++
-	2. Install MySQL-connector-8
-	3a. If running on 32-bit system, download Crypto++ source and build the lib. Replace src/lib/cryptopp/x64/Output/Release/libcrypto.dll with newly build 32-bit version
-	 b. If running on 64-bit system, the 64-bit lib and source is already included
+	2. Install Crypto++
+	3. Install MySQL-Connector-8
+
+
+INSTALLING G++:
+	Linux: Open terminal and run command 'sudo apt install g++'
+	
+	Windows:
+	
+INSTALLING CRYPTO++:
+	Linux: Open terminal and run command 'sudo apt install libcrypto++-dev libcrypto++-doc libcrypto++-utils'
+	
+	Windows: a. If running on 32-bit system, download Crypto++ source and build the lib in Visual Studio. Replace src/lib/cryptlib.dll with newly build 32-bit version
+			 b. If running on 64-bit system, the 64-bit lib and source is already included
+	
+INSTALLING MYSQL-CONNECTOR:
+	Linux: Open terminal and run
+	
+	Windows: Download and install from binaries
+	

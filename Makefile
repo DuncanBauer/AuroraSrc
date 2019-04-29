@@ -14,7 +14,8 @@ CC = g++
 CFLAGS = -Wall -g -std=c++14 -pthread
 $(info detected os is $(detected_os))
 ifeq ($(detected_os), Windows)
-	CFLAGS += -L. -lsrc/lib/cryptopp/x64/Output/Release/cryptlib
+	#CFLAGS += -L. -lsrc/lib/cryptopp/x64/Output/Release/cryptlib
+	CFLAGS += -L. -lsrc/lib/cryptlib
 endif
 ifeq ($(detected_os), Other)
 	CFLAGS += -lcryptopp
