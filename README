@@ -1,7 +1,16 @@
 OS:
-	Linux Ubuntu
-    Windows 10
+	Linux
+	Windows 10
 
 DEPENDENCIES:
-    Python3
-    Crypto++
+	Python3
+	Crypto++
+	MySQL
+	Pybind
+
+SETUP ON LINUX:
+	1. Install g++ with command 'sudo apt install g++' if not installed
+	2. Install cryptopp with command 'sudo apt install libcrypto++-dev libcrypto++-doc libcrypto++-utils
+
+SETUP ON WINDOWS:
+	1. So far so good, needs additional testing

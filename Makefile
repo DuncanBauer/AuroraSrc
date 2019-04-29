@@ -1,4 +1,5 @@
-ifeq '$(findstring ;,$(PATH))' ';'
+#ifeq '$(findstring ;,$(PATH))' ';'
+ifeq ($(OS),Windows_NT)
 	detected_os := Windows
 else
 	detected_os := Other
@@ -11,7 +12,7 @@ endif
 CC = g++
 
 CFLAGS = -Wall -g -std=c++14 -pthread
-
+$(info detected os is $(detected_os))
 ifeq ($(detected_os), Windows)
 	CFLAGS += -L. -lsrc/lib/cryptopp/x64/Output/Release/cryptlib
 endif
@@ -42,7 +43,7 @@ all :
 	$(CC) $(CFLAGS) $(FILEIO_SOURCES) -o fileio
 
 master :
-	$(CC) $(CFLAGS) $(WORLD_SOURCES) -lcryptopp -o master
+	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o master
 
 tools :
 	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o toolstest
