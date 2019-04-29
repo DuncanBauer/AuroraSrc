@@ -3,7 +3,7 @@
 
 #include "../../tools/Packet.h"
 
-#include "../../lib/cryptopp/aes.h"
+#include "cryptopp/aes.h"
 /*
 class MapleAESOFB
 {
