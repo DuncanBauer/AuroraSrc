@@ -1,4 +1,3 @@
-#ifeq '$(findstring ;,$(PATH))' ';'
 ifeq ($(OS),Windows_NT)
 	detected_os := Windows
 else

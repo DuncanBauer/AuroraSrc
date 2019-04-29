@@ -2,9 +2,11 @@
 
 #include "../../tools/BitTools.h"
 
+using CryptoPP::OFB_Mode;
+
 MapleAESOFB::MapleAESOFB(byte * key, byte * iv, _short mapleVersion) 
 {
-//	CryptoPP::OFB_MODE<CryptoPP::AES>::Encryption cipher;
+	OFB_Mode<CryptoPP::AES>::Encryption cipher;
 //	SecretKeySpec skeySpec = new SecretKeySpec(key, "AES");
 
 //	try {
