@@ -12,15 +12,11 @@ GIT REPO INCLUDES:
 		64-bit libcrypto.lib   (LINUX users may ignore)
 		crypto++ source files  (LINUX users may ignore)
 	
-SETUP ON LINUX:
+SETUP:
 	1. Install g++ if not installed
 	2. Install Crypto++
 	3. Install MySQL-Connector-8
-
-SETUP ON WINDOWS:
-	1. Install g++
-	2. Install Crypto++
-	3. Install MySQL-Connector-8
+	4. Install Pybind
 
 
 INSTALLING G++:
@@ -38,4 +34,8 @@ INSTALLING MYSQL-CONNECTOR:
 	Linux: Open terminal and run
 	
 	Windows: Download and install from binaries
-	
+
+INSTALLING PYBIND:
+	Linux:
+
+	Windows:	
