@@ -40,8 +40,8 @@ TOOLS_SOURCES = src/maintools.cpp \
 
 
 all :
-	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o master
-	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o tools
+	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o master $(LFLAGS)
+	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o tools $(LFLAGS)
 
 master :
 	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o master $(LFLAGS)
@@ -50,5 +50,4 @@ tools :
 	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o tools $(LFLAGS)
 
 clean :
-	rm -f tools
-	rm -f master
+	rm -f tools master
