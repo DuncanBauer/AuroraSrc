@@ -36,6 +36,12 @@ INSTALLING MYSQL-CONNECTOR:
 	
 	Windows: Download and install from binaries
 
+INSTALLING BOOST LIBRARIES:
+	Linux: Open terminal and run command 'sudo apt install libboost-all-dev'
+
+	Windows: Required boost libraries are already in AuroraSrc
+
+
 INSTALLING PYBIND:
 	Linux:
 

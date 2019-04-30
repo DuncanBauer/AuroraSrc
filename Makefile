@@ -11,11 +11,12 @@ endif
 
 
 CC = g++
-CFLAGS = -Wall -g -std=c++14 -pthread -I includes
+CFLAGS = -Wall -g -std=c++14 -pthread
 LFLAGS =
 
 $(info detected os is $(detected_os))
 ifeq ($(detected_os), Windows)
+	CFLAGS += -I includes
 	LFLAGS += -L lib -l cryptopp -l mysqlcppconn8-static
 endif
 
