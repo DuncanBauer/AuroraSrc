@@ -19,14 +19,54 @@
 	#include "boost/version.hpp"
 #endif
 
+extern "C" 
+{
+	#include "lua/lua.h"
+	#include "lua/lualib.h"
+	#include "lua/lauxlib.h"
+}
+
+
 int main(int argc, char* argv[])
 {
 
+/* 
+ * 	LUA TESTING
+ */
+
+	lua_State* L = luaL_newstate();
+	luaL_openlibs(L);
+	luaL_dofile(L,"scripts/test.lua");
+	lua_close(L);
+
+
+
+
+
+
+
+
+
+
+
+
+/*	
+ *	BOOST TESTING
+ *
 	std::cout << BOOST_VERSION /100000 << "." << BOOST_VERSION / 100 % 1000 << "." << BOOST_VERSION % 100 << '\n';
+*/	
+
 	
-	
+/*
+ *	MYSQLCONNECTOR TESTING
+ *
 	sql::Driver* driver;
-	
+*/
+
+
+/*
+ * 	CRYPTOPP TESTING
+ *
 	byte key[32] = {0x13, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, (byte) 0xB4, 0x00, 0x00, 0x00, 0x1B, 0x00, 0x00, 0x00, 0x0F, 0x00, 0x00, 0x00, 0x33, 0x00, 0x00, 0x00, 0x52, 0x00, 0x00, 0x00};
 	byte ivRecv[4] = {70, 114, 122, 82};
 	byte ivSend[4] = {82, 48, 120, 115};
@@ -41,7 +81,7 @@ int main(int argc, char* argv[])
 
 	std::cout << "Arr: " << arr << '\n';
 	std::cout << "Test: " << test << '\n';
-
+*/
 
 
 

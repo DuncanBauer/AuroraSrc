@@ -17,7 +17,7 @@ SETUP:
 	2. Install Crypto++
 	3. Install MySQL-Connector-8
 	4. Install Boost Libraries
-	5. Install Pybind
+	5. Install Lua
 
 
 INSTALLING G++:
@@ -42,7 +42,7 @@ INSTALLING BOOST LIBRARIES:
 	Windows: Required boost libraries are already in AuroraSrc
 
 
-INSTALLING PYBIND:
-	Linux:
+INSTALLING LUA:
+	Linux: Open terminal and run command 'sudo apt install lua5.3'
 
-	Windows:	
+	Windows: Required headers and library is already in AuroraSrc

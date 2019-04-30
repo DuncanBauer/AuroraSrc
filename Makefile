@@ -17,7 +17,7 @@ LFLAGS =
 $(info detected os is $(detected_os))
 ifeq ($(detected_os), Windows)
 	CFLAGS += -I includes
-	LFLAGS += -L lib -l cryptopp -l mysqlcppconn8-static
+	LFLAGS += -L lib -l cryptopp -l mysqlcppconn8-static -l lua
 endif
 
 ifeq ($(detected_os), Other)
