@@ -20,7 +20,7 @@ ifeq ($(detected_os), Windows)
 endif
 
 ifeq ($(detected_os), Other)
-	LFLAGS += -L /usr/local/lib -l cryptopp
+	LFLAGS += -l cryptopp
 endif
 
 
