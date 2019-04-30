@@ -3,20 +3,20 @@
 
 #if defined(_WIN32)
 	#warning "WIN32"
-	#include "../includes/mysqlcppconn8/jdbc/cppconn/driver.h"
-	#include "../includes/boost/version.hpp"
+	#include "mysqlcppconn8/jdbc/cppconn/driver.h"
+	#include "boost/version.hpp"
 #elif defined(_WIN64)
 	#warning "WIN64"
-	#include "../includes/mysqlcppconn8/jdbc/cppconn/driver.h"
-	#include "../includes/boost/version.hpp"
+	#include "mysqlcppconn8/jdbc/cppconn/driver.h"
+	#include "boost/version.hpp"
 #elif defined(__CYGWIN__)
 	#warning "CYGWIN"
-	#include "../includes/mysqlcppconn8/jdbc/cppconn/driver.h"
-	#include "../includes/boost/version.hpp"
+	#include "mysqlcppconn8/jdbc/cppconn/driver.h"
+	#include "boost/version.hpp"
 #elif defined(__linux__)
 	#warning "Linux"
 	#include "cppconn/driver.h"
-	#include <boost/version.hpp>
+	#include "boost/version.hpp"
 #endif
 
 int main(int argc, char* argv[])

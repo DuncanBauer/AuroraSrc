@@ -11,7 +11,7 @@ endif
 
 
 CC = g++
-CFLAGS = -Wall -g -std=c++14 -pthread
+CFLAGS = -Wall -g -std=c++14 -pthread -I includes
 LFLAGS =
 
 $(info detected os is $(detected_os))
