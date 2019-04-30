@@ -6,11 +6,19 @@ DEPENDENCIES:
 	Python3
 	Crypto++
 	MySQL
-	Pybind
+	Lua
 
-GIT REPO INCLUDES:
-		64-bit libcrypto.lib   (LINUX users may ignore)
-		crypto++ source files  (LINUX users may ignore)
+GIT REPO INCLUDES (LINUX users may ignore):
+		libcrypto.a
+		Crypto++ header files
+		
+		mysqlcppconn8-static.lib
+		Mysqlcppconn8 header files
+
+		Boost header files
+
+		liblua.a 
+		Lua header files
 	
 SETUP:
 	1. Install g++ if not installed
@@ -28,18 +36,18 @@ INSTALLING G++:
 INSTALLING CRYPTO++:
 	Linux: Open terminal and run command 'sudo apt install libcrypto++-dev libcrypto++-doc libcrypto++-utils'
 	
-	Windows: a. If running on 32-bit system, download Crypto++ source and build the lib in Visual Studio. Replace src/lib/cryptlib.dll with newly build 32-bit version
+	Windows: a. If running on 32-bit system, download Crypto++ source and build the lib in Visual Studio. Replace lib/libcryptopp.a with newly build 32-bit version
 		 b. If running on 64-bit system, the 64-bit lib and source is already included
 	
 INSTALLING MYSQL-CONNECTOR:
 	Linux: Open terminal and run 'sudo apt install libmysqlcppconn-dev'
 	
-	Windows: Download and install from binaries
+	Windows: Required headers and library already in Aurorasrc
 
 INSTALLING BOOST LIBRARIES:
 	Linux: Open terminal and run command 'sudo apt install libboost-all-dev'
 
-	Windows: Required boost libraries are already in AuroraSrc
+	Windows: Required headers and library already in AuroraSrc
 
 
 INSTALLING LUA:
@@ -53,4 +61,4 @@ INSTALLING LUA:
 		If there are errors during the install it's likely due to missing dependencies. Ex: readline
 		If that is the case install missing dependencies. Ex: 'sudo apt install libreadline-dev'
 
-	Windows: Required headers and library is already in AuroraSrc
+	Windows: Required headers and library already in AuroraSrc
