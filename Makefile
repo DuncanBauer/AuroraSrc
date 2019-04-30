@@ -13,13 +13,15 @@ endif
 CC = g++
 
 CFLAGS = -Wall -g -std=c++14 -lpthread
+LFLAGS =
+
 $(info detected os is $(detected_os))
 ifeq ($(detected_os), Windows)
-	CFLAGS += -Lsrc/lib/cryptopp -lcryptlib
+	LFLAGS += -L src/lib/cryptopp -lcryptlib
 endif
 
 ifeq ($(detected_os), Other)
-	CFLAGS += -L/usr/local/lib -l:libcryptopp.a
+	LFLAGS += -L /usr/local/lib -l cryptopp
 endif
 
 WORLD_SOURCES = src/net/sockets/*.cpp \
@@ -44,7 +46,7 @@ master :
 	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o master
 
 tools :
-	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o tools
+	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o tools $(LFLAGS)
 
 clean :
 	rm -f tools
