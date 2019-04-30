@@ -2,7 +2,7 @@
 
 #include "../../tools/BitTools.h"
 
-#include "cryptopp/sha.h"
+#include "../../../includes/cryptopp/sha.h"
 
 MapleAESOFB::MapleAESOFB(byte * key, byte * iv, _short mapleVersion) 
 {

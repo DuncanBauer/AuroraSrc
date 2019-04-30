@@ -1,9 +1,23 @@
 #include "tools/PacketStream.h"
-#include <boost/version.hpp>
 #include "net/crypto/MapleAESOFB.h"
 
-// Linux include need to set up for windows
-#include "cppconn/driver.h"
+#if defined(_WIN32)
+	#warning "WIN32"
+	#include "../includes/mysqlcppconn8/jdbc/cppconn/driver.h"
+	#include "../includes/boost/version.hpp"
+#elif defined(_WIN64)
+	#warning "WIN64"
+	#include "../includes/mysqlcppconn8/jdbc/cppconn/driver.h"
+	#include "../includes/boost/version.hpp"
+#elif defined(__CYGWIN__)
+	#warning "CYGWIN"
+	#include "../includes/mysqlcppconn8/jdbc/cppconn/driver.h"
+	#include "../includes/boost/version.hpp"
+#elif defined(__linux__)
+	#warning "Linux"
+	#include "cppconn/driver.h"
+	#include <boost/version.hpp>
+#endif
 
 int main(int argc, char* argv[])
 {

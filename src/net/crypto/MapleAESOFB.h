@@ -5,19 +5,19 @@
 
 #if defined(_WIN32)
 	#warning "WIN32"
-	#include "../../lib/cryptopp/aes.h"
-	#include "../../lib/cryptopp/modes.h"
-	#include "../../lib/cryptopp/filters.h"
+	#include "../../../includes/cryptopp/aes.h"
+	#include "../../../includes/cryptopp/modes.h"
+	#include "../../../includes/cryptopp/filters.h"
 #elif defined(_WIN64)
 	#warning "WIN64"
-	#include "../../lib/cryptopp/aes.h"
-	#include "../../lib/cryptopp/modes.h"
-	#include "../../lib/cryptopp/filters.h"
+	#include "../../../includes/cryptopp/aes.h"
+	#include "../../../includes/cryptopp/modes.h"
+	#include "../../../includes/cryptopp/filters.h"
 #elif defined(__CYGWIN__)
 	#warning "CYGWIN"
-	#include "../../lib/cryptopp/aes.h"
-	#include "../../lib/cryptopp/modes.h"
-	#include "../../lib/cryptopp/filters.h"
+	#include "../../../includes/cryptopp/aes.h"
+	#include "../../../includes/cryptopp/modes.h"
+	#include "../../../includes/cryptopp/filters.h"
 #elif defined(__linux__)
 	#warning "Linux"
 	#include "cryptopp/modes.h"
