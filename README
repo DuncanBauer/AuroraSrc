@@ -49,7 +49,7 @@ INSTALLING LUA:
 			'tar zxf lua-5.3.5.tar.gz'
 			'cd lua-5.3.5'
 			'make linux test'
-			'make install'
+			'sudo make install'
 		If there are errors during the install it's likely due to missing dependencies. Ex: readline
 		If that is the case install missing dependencies. Ex: 'sudo apt install libreadline-dev'
 
