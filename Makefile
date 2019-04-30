@@ -21,7 +21,7 @@ ifeq ($(detected_os), Windows)
 endif
 
 ifeq ($(detected_os), Other)
-	LFLAGS += -l cryptopp -l mysqlcppconn
+	LFLAGS += -l cryptopp -l mysqlcppconn -l lua -l dl
 endif
 
 

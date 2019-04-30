@@ -32,7 +32,7 @@ INSTALLING CRYPTO++:
 		 b. If running on 64-bit system, the 64-bit lib and source is already included
 	
 INSTALLING MYSQL-CONNECTOR:
-	Linux: Open terminal and run
+	Linux: Open terminal and run 'sudo apt install libmysqlcppconn-dev'
 	
 	Windows: Download and install from binaries
 
@@ -43,6 +43,14 @@ INSTALLING BOOST LIBRARIES:
 
 
 INSTALLING LUA:
-	Linux: Open terminal and run command 'sudo apt install lua5.3'
+	Linux: Open terminal and navigate to Desktop or Downloads.
+	       Run commands:
+			'curl -R -O http://lua.org/ftp/lua-5.3.5.tar.gz'
+			'tar zxf lua-5.3.5.tar.gz'
+			'cd lua-5.3.5'
+			'make linux test'
+			'make install'
+		If there are errors during the install it's likely due to missing dependencies. Ex: readline
+		If that is the case install missing dependencies. Ex: 'sudo apt install libreadline-dev'
 
 	Windows: Required headers and library is already in AuroraSrc

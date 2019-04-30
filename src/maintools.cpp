@@ -3,28 +3,45 @@
 
 #if defined(_WIN32)
 	#warning "WIN32"
+	extern "C" 
+	{
+		#include "lua/lua.h"
+		#include "lua/lualib.h"
+		#include "lua/lauxlib.h"
+	}
 	#include "mysqlcppconn8/jdbc/cppconn/driver.h"
 	#include "boost/version.hpp"
 #elif defined(_WIN64)
 	#warning "WIN64"
+	extern "C" 
+	{
+		#include "lua/lua.h"
+		#include "lua/lualib.h"
+		#include "lua/lauxlib.h"
+	}
 	#include "mysqlcppconn8/jdbc/cppconn/driver.h"
 	#include "boost/version.hpp"
 #elif defined(__CYGWIN__)
 	#warning "CYGWIN"
+	extern "C" 
+	{
+		#include "lua/lua.h"
+		#include "lua/lualib.h"
+		#include "lua/lauxlib.h"
+	}
 	#include "mysqlcppconn8/jdbc/cppconn/driver.h"
 	#include "boost/version.hpp"
 #elif defined(__linux__)
 	#warning "Linux"
+	extern "C" 
+	{
+		#include "lua.h"
+		#include "lualib.h"
+		#include "lauxlib.h"
+	}
 	#include "cppconn/driver.h"
 	#include "boost/version.hpp"
 #endif
-
-extern "C" 
-{
-	#include "lua/lua.h"
-	#include "lua/lualib.h"
-	#include "lua/lauxlib.h"
-}
 
 
 int main(int argc, char* argv[])
