@@ -44,6 +44,9 @@
 #endif
 
 
+#include "net/db/MySQLConn.h"
+
+
 int main(int argc, char* argv[])
 {
 
@@ -51,10 +54,10 @@ int main(int argc, char* argv[])
  * 	LUA TESTING
  */
 
-	lua_State* L = luaL_newstate();
-	luaL_openlibs(L);
-	luaL_dofile(L,"scripts/test.lua");
-	lua_close(L);
+//	lua_State* L = luaL_newstate();
+//	luaL_openlibs(L);
+//	luaL_dofile(L,"scripts/test.lua");
+//	lua_close(L);
 
 
 
@@ -77,8 +80,11 @@ int main(int argc, char* argv[])
 /*
  *	MYSQLCONNECTOR TESTING
  *
-	sql::Driver* driver;
 */
+	MySQLConn conn;
+
+
+
 
 
 /*
