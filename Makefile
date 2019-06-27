@@ -17,7 +17,7 @@ LFLAGS = -lpthread
 $(info detected os is $(detected_os))
 ifeq ($(detected_os), Windows)
 	CFLAGS += -Iincludes
-	LFLAGS += -Llib -lcryptopp -lmysqlcppconn8-static -llua -lssl -lcrypto
+	LFLAGS += -Llib -lcryptopp -llua -lmysqlcppconn8-static -lssl -lcrypto
 endif
 
 ifeq ($(detected_os), Other)

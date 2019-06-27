@@ -14,7 +14,7 @@ MySQLConn::MySQLConn()
 	this->schema = config["schema"];
 
 	std::string location = "tcp://" + this->host + ":" + std::to_string(this->port);
-	this->driver = sql::mysql::get_driver_instance();
+	this->driver = get_driver_instance();
 	this->con = this->driver->connect(location, this->user, this->pass);
 	this->con->setSchema(this->schema);
 
