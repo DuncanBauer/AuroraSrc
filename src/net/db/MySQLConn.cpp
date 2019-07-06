@@ -6,6 +6,7 @@
 
 MySQLConn::MySQLConn()
 {
+    /*
 	std::map<std::string, std::string> config = ConfigParser::getValuesFromFile("db.conf");
 	this->host = config["host"];
 	this->port = std::stoi(config["port"]);
@@ -17,7 +18,7 @@ MySQLConn::MySQLConn()
 	this->driver = get_driver_instance();
 	this->con = this->driver->connect(location, this->user, this->pass);
 	this->con->setSchema(this->schema);
-
+    */
 }
 
 MySQLConn::~MySQLConn()

@@ -5,8 +5,10 @@ OS:
 DEPENDENCIES:
 	Python3
 	Crypto++
-	MySQL
+	MySql Server
+	MySQL-Connector-8
 	Lua
+	OpenSSL 1.1
 
 GIT REPO INCLUDES (LINUX users may ignore):
 		libcrypto.a

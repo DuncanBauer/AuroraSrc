@@ -11,17 +11,17 @@ endif
 
 
 CC = g++
-CFLAGS = -Wall -g -std=c++11 -DSTATIC_CONNPP 
+CFLAGS = -Wall -g -std=c++14 -DSTATIC_CONCPP
 LFLAGS = -lpthread
 
 $(info detected os is $(detected_os))
 ifeq ($(detected_os), Windows)
 	CFLAGS += -Iincludes
-	LFLAGS += -Llib -lcryptopp -llua -lmysqlcppconn8-static -lssl -lcrypto
+	LFLAGS += -Llib -lcryptopp -llua -lmysqlcppconn8 -lssl -lcrypto
 endif
 
 ifeq ($(detected_os), Other)
-	LFLAGS += -lcryptopp -lmysqlcppconn -llua -ldl
+	LFLAGS += -lssl -lcryptopp -lmysqlcppconn -llua -ldl
 endif
 
 
@@ -32,14 +32,14 @@ WORLD_SOURCES = src/net/sockets/*.cpp \
 		src/net/crypto/*.cpp \
 		src/net/db/*.cpp \
 		src/net/*.cpp \
-    		src/tools/*.cpp \
+    	src/tools/*.cpp \
 		src/Master.cpp \
 		src/main.cpp
 
 TOOLS_SOURCES = src/maintools.cpp \
 		src/net/crypto/*.cpp \
 		src/net/db/*.cpp \
-	        src/tools/*.cpp 
+	    src/tools/*.cpp
 
 
 all :
