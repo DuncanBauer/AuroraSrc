@@ -17,7 +17,7 @@ MySQLConn::MySQLConn()
 	this->user = config["user"];
 	this->pass = config["pass"];
 	this->schema = config["schema"];
-
+/*
 	mysqlx::Session sess(this->host, this->port, this->user, this->pass);
 	mysqlx::Schema db = sess.getSchema(this->schema);
 	
@@ -29,7 +29,7 @@ MySQLConn::MySQLConn()
 									
 	std::cout << myDocs.fetchOne();
 	
-	/*
+*/	
 	std::string location = "tcp://" + this->host + ":" + std::to_string(this->port);
 
 	try
@@ -57,7 +57,7 @@ MySQLConn::MySQLConn()
 		std::cout << " (MySQL error code: " << e.getErrorCode();
 		std::cout << ", SQLState: " << e.getSQLState() << " )" << '\n';
 	}
-	*/
+	
 }
 
 MySQLConn::~MySQLConn()

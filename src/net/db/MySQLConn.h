@@ -4,6 +4,7 @@
 #if defined(__linux__)
 	#warning "Linux"
 	#include "mysql_connection.h"
+//	#include "mysqlcppconn8/mysqlx/xdevapi.h"
 	#include "cppconn/driver.h"
 	#include "cppconn/exception.h"
 	#include "cppconn/resultset.h"
@@ -38,8 +39,8 @@ class MySQLConn
 		std::string pass;
 		std::string schema;
 
-		//sql::Connection *con;
-		//sql::Driver *driver;
+		sql::Connection *con;
+		sql::Driver *driver;
 };
 
 
