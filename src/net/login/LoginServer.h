@@ -14,6 +14,7 @@
 
 class TCPClientSocket;
 
+#include "../db/MySQLConn.h"
 #include "../../tools/PacketStream.h"
 #include "LoginWorker.h"
 #include "../GenericMapleServer.h"
@@ -39,6 +40,7 @@ class LoginServer : public GenericMapleServer
 		int getConnectionsLength();
 
 	private:
+		MySQLConn* conn;
 		std::unique_ptr<LoginConnections> connections;
 
 };

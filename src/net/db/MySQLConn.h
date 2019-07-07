@@ -38,8 +38,8 @@ class MySQLConn
 		std::string pass;
 		std::string schema;
 
-		//sql::Connection *con;
-		//sql::Driver *driver;
+		sql::Connection *con;
+		sql::Driver *driver;
 };
 
 

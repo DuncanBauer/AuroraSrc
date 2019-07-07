@@ -18,10 +18,15 @@ LoginServer::LoginServer(char* ip, int port, Master* master, int id) : GenericMa
 	std::map<std::string, std::string> config = ConfigParser::getValuesFromFile("login.conf");
 	this->POLL_TIMEOUT = std::stoi(config["loginserver.poll.timeout"]);
 	this->connections.reset(new LoginConnections());
+ 	this->conn = new MySQLConn();
 }
 
 LoginServer::~LoginServer()
 {
+	if(this->conn != nullptr)
+	{
+		delete conn;
+	}
 }
 
 bool LoginServer::run()

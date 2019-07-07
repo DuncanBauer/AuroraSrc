@@ -32,14 +32,14 @@ WORLD_SOURCES = src/net/sockets/*.cpp \
 		src/net/crypto/*.cpp \
 		src/net/db/*.cpp \
 		src/net/*.cpp \
-    	src/tools/*.cpp \
+    		src/tools/*.cpp \
 		src/Master.cpp \
 		src/main.cpp
 
 TOOLS_SOURCES = src/maintools.cpp \
 		src/net/crypto/*.cpp \
 		src/net/db/*.cpp \
-	    src/tools/*.cpp
+		src/tools/*.cpp
 
 
 all :
