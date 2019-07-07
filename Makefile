@@ -21,7 +21,7 @@ ifeq ($(detected_os), Windows)
 endif
 
 ifeq ($(detected_os), Other)
-	LFLAGS += -llua -lcryptopp -lmysqlcppconn -lssl -ldl -lcrypto -lpthread
+	LFLAGS += -llua -lcryptopp -lmysqlcppconn -ldl -lpthread
 endif
 
 
