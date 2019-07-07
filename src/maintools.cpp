@@ -9,7 +9,7 @@
 		#include "lua/lualib.h"
 		#include "lua/lauxlib.h"
 	}
-	#include "mysqlcppconn8/jdbc/cppconn/driver.h"
+	//#include "mysqlcppconn8/jdbc/cppconn/driver.h"
 	#include "boost/version.hpp"
 #elif defined(_WIN64)
 	#warning "WIN64"
@@ -19,7 +19,7 @@
 		#include "lua/lualib.h"
 		#include "lua/lauxlib.h"
 	}
-	#include "mysqlcppconn8/jdbc/cppconn/driver.h"
+	//#include "mysqlcppconn8/jdbc/cppconn/driver.h"
 	#include "boost/version.hpp"
 #elif defined(__CYGWIN__)
 	#warning "CYGWIN"
@@ -29,7 +29,7 @@
 		#include "lua/lualib.h"
 		#include "lua/lauxlib.h"
 	}
-	#include "mysqlcppconn8/jdbc/cppconn/driver.h"
+	//#include "mysqlcppconn8/jdbc/cppconn/driver.h"
 	#include "boost/version.hpp"
 #elif defined(__linux__)
 	#warning "Linux"

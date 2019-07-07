@@ -18,6 +18,18 @@ MySQLConn::MySQLConn()
 	this->pass = config["pass"];
 	this->schema = config["schema"];
 
+	mysqlx::Session sess(this->host, this->port, this->user, this->pass);
+	mysqlx::Schema db = sess.getSchema(this->schema);
+	
+	mysqlx::Collection myColl = db.getCollection("my_collection");
+	
+	mysqlx::DocResult myDocs = myColl.find("name like :param")
+									.limit(1)
+									.bind("param", "S%").execute();
+									
+	std::cout << myDocs.fetchOne();
+	
+	/*
 	std::string location = "tcp://" + this->host + ":" + std::to_string(this->port);
 
 	try
@@ -45,11 +57,12 @@ MySQLConn::MySQLConn()
 		std::cout << " (MySQL error code: " << e.getErrorCode();
 		std::cout << ", SQLState: " << e.getSQLState() << " )" << '\n';
 	}
+	*/
 }
 
 MySQLConn::~MySQLConn()
 {
-	delete con;
+	//delete con;
 }
 
 bool MySQLConn::connect()

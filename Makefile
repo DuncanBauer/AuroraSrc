@@ -12,16 +12,16 @@ endif
 
 CC = g++
 CFLAGS = -Wall -g -std=c++14 -DSTATIC_CONCPP
-LFLAGS = -lpthread
+LFLAGS =
 
 $(info detected os is $(detected_os))
 ifeq ($(detected_os), Windows)
 	CFLAGS += -Iincludes
-	LFLAGS += -Llib -lcryptopp -llua -lmysqlcppconn8 -lssl -lcrypto
+	LFLAGS += -Llib -llua -lcryptopp -lmysqlcppconn8-static -lssl -ldl -lcrypto -lpthread
 endif
 
 ifeq ($(detected_os), Other)
-	LFLAGS += -lssl -lcryptopp -lmysqlcppconn -llua -ldl
+	LFLAGS += -llua -lmysqlcppconn -lssl -lcryptopp -ldl -lpthread
 endif
 
 
