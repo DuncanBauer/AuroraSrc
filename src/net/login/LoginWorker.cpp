@@ -72,7 +72,8 @@ void LoginWorker::run()
 				bytesRecv = recv(client->getSocket(), buff, 512, 0);
 				std::string temp = reinterpret_cast<char *>(buff);
 				data = data + temp;
-		
+				std::cout << "IN PROGRESS DATA (DEC): " << data << '\n';
+				std::cout << "IN PROGRESS DATA (HEX): " << std::hex << data << std::dec << '\n';
 				// Ends reading when the packet is finished or the client disconnects
 				if(bytesRecv == -1 || bytesRecv == 0)
 				{
@@ -101,10 +102,11 @@ void LoginWorker::run()
 			std::ostringstream str = ps.getByteStreamHex();
 
 
-		//	std::cout << "Packet Length: " <<   << '\n';
+			std::cout << "Packet Length: " << packet.length  << '\n';
 			std::cout << "Raw Data: " << data << '\n';
-			std::cout << "Decoded: " << MapleCodec::decode(packet) << '\n';
-			std::cout << "Decoded HEX: " << str.str().c_str() << '\n';
+			//std::cout << "Decoded: " << MapleCodec::decode(packet) << '\n';
+			std::cout << "Raw HEX: " << str.str().c_str() << '\n';
+			std::cout << "Raw DEC: " << ps.getByteStream().str().c_str();
 		}
 
 	}
