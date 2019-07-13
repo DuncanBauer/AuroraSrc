@@ -81,7 +81,7 @@ class LoginServer : public GenericMapleServer<TCPSock>
         			}
         			break;
         		}
-                this->listening();
+                	this->listening();
         	}
 
             #ifndef LINUX
@@ -120,8 +120,6 @@ class LoginServer : public GenericMapleServer<TCPSock>
                 this->getMutex()->unlock();
 		temp = nullptr;
 
-		std::cout << "FDCOUNT: " << fdcount << '\n';
-		std::cout << "POLL_TIMEOUT: " << this->POLL_TIMEOUT << '\n';
                 // Poll for incoming connections enter if activity on one of the fds
                 if(poll(fds, fdcount, this->POLL_TIMEOUT))
                 {
@@ -146,6 +144,7 @@ class LoginServer : public GenericMapleServer<TCPSock>
                             char host[NI_MAXHOST];
                             char svc[NI_MAXSERV];
 			    int sock;
+			    // Accept all incoming connections
 			    do
 			    {
                             sock = accept(this->getSocket(),
@@ -177,16 +176,20 @@ class LoginServer : public GenericMapleServer<TCPSock>
                                 std::shared_ptr<TCPClientSocket<TCPSock>> client(new TCPClientSocket<TCPSock>());
                                 client->setSocket(sock);
                                 client->setHint(client_addr);
+				std::cout << "LOGINSERVER: LISTENING (1 CLIENT SOCKET = " << client->getSocket() << ")" << '\n';
                                 this->spawnWorker(client);
-
+				std::cout << "LOGINSERVER: LISTENING (2 CLIENT SOCKET = " << client->getSocket() << ")" << '\n';
                             }
 			    else
 			    {
-				std::cout << "LOGINSERVER: LISTENING (CONNECTION REJECTED ON LINUX)" << '\n';
-			    	//if(errno != EWOULDBLOCK)
-				//{
-				//	// end server here
-				//}	
+			    	if(errno != EWOULDBLOCK)
+				{
+					std::cout << "LOGINSERVER: LISTENING (SOMETHING FUCKY HAPPENED HERE)" << '\n';
+				}
+				else
+				{
+					std::cout << "LOGINSERVER: LISTENING (NO PENDING CONNECTIONS)" << '\n';
+				}
 			    }
 			    } while(sock != -1);
                         }
@@ -196,10 +199,6 @@ class LoginServer : public GenericMapleServer<TCPSock>
 			}
                     }
                 }
-		//else
-		//{
-		//	std::cout << "LOGINSERVER: LISTENING (NO INCOMING CONNECTIONS)" << '\n';
-		//}
                 free(fds);
             #else
                 std::cout << "Listening on Windows: " << '\n';
@@ -320,19 +319,19 @@ class LoginServer : public GenericMapleServer<TCPSock>
         	loginWorkerThread->detach();
 
         	// Add client/worker pair as connection
-        	//this->addConnection(client, loginWorker);
+        	this->addConnection(client, loginWorker);
 
         	return true;
         }
 
-    /*
-        void addConnection(std::shared_ptr<TCPClientSocket> client, std::shared_ptr<LoginWorker> worker)
+    
+        void addConnection(std::shared_ptr<TCPClientSocket<TCPSock>> client, std::shared_ptr<LoginWorker<TCPSock>> worker)
         {
         	this->getMutex()->lock();
         	this->connections->emplace(client, worker);
         	this->getMutex()->unlock();
         }
-
+/*
         void removeConnection(std::shared_ptr<TCPClientSocket> client)
         {
         	this->getMutex()->lock();

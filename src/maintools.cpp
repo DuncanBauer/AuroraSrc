@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     Master* master = new Master();
     //LoginServer<TCPSocketWindows> * server = new LoginServer<TCPSocketWindows>("127.0.0.1", 8484, master, 1);
  
-    LoginServer<TCPSocket> * server = new LoginServer<TCPSocket>("127.0.0.1", 8484, master, 1);
+    LoginServer<TCPSocket> * server = new LoginServer<TCPSocket>("0.0.0.0", 8484, master, 1);
     server->run();
     delete server;
     delete master;
