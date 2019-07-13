@@ -10,18 +10,18 @@
 #include <memory>
 
 
-class TCPSocket 
+class TCPSocket
 {
 	public:
-        	TCPSocket();
+        TCPSocket();
 		TCPSocket(int sock);
-        	~TCPSocket();
+        ~TCPSocket();
 
 		bool closeSocket();
 
 		void setSocket(int sock);
 		int getSocket();
-	
+
 		sockaddr_in* getHint();
 		void setHint(sockaddr_in client_addr);
 

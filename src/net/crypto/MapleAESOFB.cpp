@@ -4,7 +4,7 @@
 
 #include "cryptopp/sha.h"
 
-MapleAESOFB::MapleAESOFB(byte * key, byte * iv, _short mapleVersion) 
+MapleAESOFB::MapleAESOFB(byte * key, byte * iv, _short mapleVersion)
 {
 	CryptoPP::SHA1 hash;
 //	CryptoPP::OFB_Mode<CryptoPP::AES>::Encryption cipher;
@@ -33,27 +33,27 @@ MapleAESOFB::~MapleAESOFB()
 {
 }
 
-void MapleAESOFB::setIv(byte * iv) 
+void MapleAESOFB::setIv(byte * iv)
 {
 	this->iv = iv;
 }
 
-byte * MapleAESOFB::getIv() 
+byte * MapleAESOFB::getIv()
 {
 	return this->iv;
 }
 
-void MapleAESOFB::crypt(byte * data, int length) 
+void MapleAESOFB::crypt(byte * data, int length)
 {
 	int remaining = length;
 	int llength = 0x5B0;
 	int start = 0;
 	int myIvLength = 16;
-	while(remaining > 0) 
+	while(remaining > 0)
 	{
 		byte myIv[myIvLength] = {0};
 		BitTools::multiplyBytes(this->iv, myIv, 4, 4);
-		if(remaining < llength) 
+		if(remaining < llength)
 		{
 			llength = remaining;
 		}
@@ -81,12 +81,12 @@ void MapleAESOFB::crypt(byte * data, int length)
 	this->updateIv();
 }
 
-void MapleAESOFB::updateIv() 
+void MapleAESOFB::updateIv()
 {
 	this->getNewIv(this->iv);
 }
 
-void MapleAESOFB::getPacketHeader(int length, byte * ret) 
+void MapleAESOFB::getPacketHeader(int length, byte * ret)
 {
 	int iiv = (iv[3]) & 0xFF;
 	iiv |= (iv[2] << 8) & 0xFF00;
@@ -101,19 +101,19 @@ void MapleAESOFB::getPacketHeader(int length, byte * ret)
 	ret[3] = (byte) (xoredIv & 0xFF);
 }
 
-int MapleAESOFB::getPacketLength(int packetHeader) 
+int MapleAESOFB::getPacketLength(int packetHeader)
 {
 	int packetLength = ((packetHeader >> 16) ^ (packetHeader & 0xFFFF));
 	packetLength = ((packetLength << 8) & 0xFF00) | ((packetLength >> 8) & 0xFF);
 	return packetLength;
 }
 
-bool MapleAESOFB::checkPacket(byte * packet) 
+bool MapleAESOFB::checkPacket(byte * packet)
 {
 	return ((((packet[0] ^ iv[2]) & 0xFF) == ((mapleVersion >> 8) & 0xFF)) && (((packet[1] ^ iv[3]) & 0xFF) == (mapleVersion & 0xFF)));
 }
 
-bool MapleAESOFB::checkPacket(int packetHeader) 
+bool MapleAESOFB::checkPacket(int packetHeader)
 {
 	byte packetHeaderBuf[2] = {0};
 	packetHeaderBuf[0] = (byte) ((packetHeader >> 24) & 0xFF);
@@ -121,7 +121,7 @@ bool MapleAESOFB::checkPacket(int packetHeader)
 	return checkPacket(packetHeaderBuf);
 }
 
-void MapleAESOFB::getNewIv(byte * iv) 
+void MapleAESOFB::getNewIv(byte * iv)
 {
 	byte in[4] = {(byte) 0xf2, 0x53, (byte) 0x50, (byte) 0xc6};
 	for (int x = 0; x < 4; x++) {
@@ -133,12 +133,12 @@ void MapleAESOFB::getNewIv(byte * iv)
 	}
 }
 
-std::string MapleAESOFB::toString() 
+std::string MapleAESOFB::toString()
 {
 //	return "IV: " + HexTool.toString(this->iv);
 }
 
-void MapleAESOFB::funnyShit(byte inputByte, byte * in) 
+void MapleAESOFB::funnyShit(byte inputByte, byte * in)
 {
 	byte elina = in[1];
 	byte anna = inputByte;

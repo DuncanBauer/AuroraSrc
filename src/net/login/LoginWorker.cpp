@@ -1,33 +1,41 @@
 #include "LoginWorker.h"
+
 #include "LoginServer.h"
 
 #include "../crypto/MapleCodec.h"
 
 #include <queue>
-#include <poll.h>
+//#include <poll.h>
 
-LoginWorker::LoginWorker()
+/*
+template <class TCPSock>
+LoginWorker<TCPSock>::LoginWorker()
 {
 }
 
-LoginWorker::LoginWorker(LoginServer* loginServer, std::shared_ptr<TCPClientSocket> client)
+template <class TCPSock>
+LoginWorker<TCPSock>::LoginWorker(LoginServer<TCPSock>* loginServer, std::shared_ptr<TCPClientSocket<TCPSock>> client)
 {
 	this->loginServer = loginServer;
 	this->client = client;
 }
 
-LoginWorker::~LoginWorker()
+template <class TCPSock>
+LoginWorker<TCPSock>::~LoginWorker()
 {
 	this->client.reset();
 	this->loginServer = NULL;
 }
 
-void LoginWorker::initialize()
+template <class TCPSock>
+void LoginWorker<TCPSock>::initialize()
 {
 }
 
-void LoginWorker::run()
+template <class TCPSock>
+void LoginWorker<TCPSock>::run()
 {
+    /*
 	// Create and send handshake to launch client
 	PacketStream ps;
 	ps.setPacket(MaplePacketCreator::getHandshake());
@@ -111,22 +119,28 @@ void LoginWorker::run()
 
 	}
 	this->disconnect();
+
 }
 
-void LoginWorker::connect()
+template <class TCPSock>
+void LoginWorker<TCPSock>::connect()
 {
 }
 
-void LoginWorker::disconnect()
+template <class TCPSock>
+void LoginWorker<TCPSock>::disconnect()
 {
 	this->loginServer->removeConnection(this->client);
 	this->client.reset();
 }
 
-void LoginWorker::reconnect()
+template <class TCPSock>
+void LoginWorker<TCPSock>::reconnect()
 {
 }
 
-void LoginWorker::stop()
+template <class TCPSock>
+void LoginWorker<TCPSock>::stop()
 {
 }
+*/

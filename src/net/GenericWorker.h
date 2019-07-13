@@ -4,12 +4,12 @@
 class GenericWorker
 {
 	public:
-		virtual void initialize() = 0;
-		virtual void run() = 0;
-		virtual void connect() = 0;
-		virtual void disconnect() = 0;
-		virtual void reconnect() = 0;
-		virtual void stop() = 0;
+		void initialize();
+		void run();
+		void connect();
+		void disconnect();
+		void reconnect();
+		void stop();
 };
 
 #endif

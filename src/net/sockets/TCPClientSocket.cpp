@@ -3,23 +3,28 @@
 #include <cstdlib>
 #include <iostream>
 
-TCPClientSocket::TCPClientSocket()
+template <class TCPSock>
+TCPClientSocket<TCPSock>::TCPClientSocket()
 {
 }
 
-TCPClientSocket::TCPClientSocket(int sock) : TCPSocket(sock)
+template <class TCPSock>
+TCPClientSocket<TCPSock>::TCPClientSocket(int sock) : TCPSock(sock)
 {
 }
 
-TCPClientSocket::~TCPClientSocket()
+template <class TCPSock>
+TCPClientSocket<TCPSock>::~TCPClientSocket()
 {
 }
 
-bool TCPClientSocket::closeSocket()
+template <class TCPSock>
+bool TCPClientSocket<TCPSock>::closeSocket()
 {
 	return true;
 }
 
-void TCPClientSocket::disconnect()
+template <class TCPSock>
+void TCPClientSocket<TCPSock>::disconnect()
 {
 }

@@ -17,7 +17,7 @@ LFLAGS =
 $(info detected os is $(detected_os))
 ifeq ($(detected_os), Windows)
 	CFLAGS += -Iincludes
-	LFLAGS += -Llib -llua -lcryptopp -lmysqlcppconn8-static -lssl -ldl -lcrypto -lpthread
+	LFLAGS += -Llib -llua -lcryptopp -lssl -ldl -lcrypto -lws2_32 -lpthread
 endif
 
 ifeq ($(detected_os), Other)
@@ -32,14 +32,20 @@ WORLD_SOURCES = src/net/sockets/*.cpp \
 		src/net/crypto/*.cpp \
 		src/net/db/*.cpp \
 		src/net/*.cpp \
-    		src/tools/*.cpp \
+    	src/tools/*.cpp \
 		src/Master.cpp \
 		src/main.cpp
 
 TOOLS_SOURCES = src/maintools.cpp \
 		src/net/crypto/*.cpp \
-		src/net/db/*.cpp \
-		src/tools/*.cpp
+		src/tools/*.cpp \
+		src/net/sockets/TCPSocketWindows.cpp \
+		src/net/sockets/TCPClientSocket.cpp \
+		src/net/sockets/TCPServerSocket.cpp \
+		src/net/GenericMapleServer.cpp \
+		src/net/login/LoginWorker.cpp \
+		src/Master.cpp
+
 
 
 all :

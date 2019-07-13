@@ -1,12 +1,12 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include "TCPSocket.h"
 
-class LoginWorker;
-class ChannelWorker;
+//class LoginWorker;
+//class ChannelWorker;
 
-class TCPClientSocket : public TCPSocket
+template <class TCPSock>
+class TCPClientSocket : public TCPSock
 {
 	public:
 		TCPClientSocket();

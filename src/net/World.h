@@ -1,6 +1,7 @@
 #ifndef WORLD_H
 #define WORLD_H
 
+/*
 #include "channel/ChannelServer.h"
 #include "login/LoginServer.h"
 
@@ -13,13 +14,13 @@ class World
 		World();
 		World(Master*_master, int id, int channelCount);
 		~World();
-		
+
 		Master* getMaster();
 
 		void start();
 		void shutdown();
 		void restart();
-		
+
 		void startChannel(int id);
 		void shutdownChannel(int id);
 		void restartChannel(int id);
@@ -28,7 +29,7 @@ class World
 		void setID(int id);
 		int getStatus();
 		void setStatus(int i);
-		
+
 		int getChannelsOnline();
 		int getChannelCount();
 		void setChannelCount(int i);
@@ -43,5 +44,5 @@ class World
 		int channelCount;
 		std::unique_ptr<Channels> channels;
 };
-
+*/
 #endif

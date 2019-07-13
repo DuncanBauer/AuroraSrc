@@ -39,8 +39,9 @@ class MySQLConn
 		std::string pass;
 		std::string schema;
 
-		sql::Connection *con;
-		sql::Driver *driver;
+        // LEGACY VARIABLES FOR LINUX SINCE I CANT INSTALL MYSQL CONNECTOR 8 ON ANY OF MY MACHINES
+		//sql::Connection *con;
+		//sql::Driver *driver;
 };
 
 

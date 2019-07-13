@@ -3,17 +3,18 @@
 #include "sockets/TCPClientSocket.h"
 
 #include <iostream>
-
-
-GenericMapleServer::GenericMapleServer(char* ip, int port, Master* master, int id) : TCPServerSocket(ip, port, id)
+/*
+template <class TCPServer, class TCPSock>
+GenericMapleServer<TCPServer, TCPSock>::GenericMapleServer(char* ip, int port, Master* master, int id) : TCPServer(ip, port, id)
 {
 //	std::cout << "GenericMapleServer constructor called" << '\n';
 	this->setMaster(master);
-	this->setServerAlertQueue(master->getServerAlertQueue());
+	this->seTCPServerAlertQueue(master->getServerAlertQueue());
 	this->playerCount = 0;
 }
 
-GenericMapleServer::~GenericMapleServer()
+template <class TCPServer, class TCPSock>
+GenericMapleServer<TCPServer, TCPSock>::~GenericMapleServer()
 {
 //	std::cout << "GenericMapleServer destructor called" << '\n';
 	this->master = NULL;
@@ -21,54 +22,64 @@ GenericMapleServer::~GenericMapleServer()
 	this->playerCount = 0;
 }
 
-Master* GenericMapleServer::getMaster()
+template <class TCPServer, class TCPSock>
+Master* GenericMapleServer<TCPServer, TCPSock>::getMaster()
 {
 	return master;
 }
 
-void GenericMapleServer::setMaster(Master* master)
+template <class TCPServer, class TCPSock>
+void GenericMapleServer<TCPServer, TCPSock>::setMaster(Master* master)
 {
 	this->master = master;
 }
 
-AlertQueue* GenericMapleServer::getServerAlertQueue()
+template <class TCPServer, class TCPSock>
+AlertQueue* GenericMapleServer<TCPServer, TCPSock>::getServerAlertQueue()
 {
 	return serverAlertQueue;
 }
 
-void GenericMapleServer::setServerAlertQueue(AlertQueue* alertQueue)
+template <class TCPServer, class TCPSock>
+void GenericMapleServer<TCPServer, TCPSock>::setServerAlertQueue(AlertQueue* alertQueue)
 {
 	this->serverAlertQueue = alertQueue;
 }
 
-bool GenericMapleServer::run()
+/*
+template <class TCPServer, class TCPSock>
+bool GenericMapleServer<TCPServer, TCPSock>::run()
 {
 	return true;
 }
 
-
-bool GenericMapleServer::connect()
+template <class TCPServer, class TCPSock>
+bool GenericMapleServer<TCPServer, TCPSock>::connect()
 {
 	return true;
 }
 
-bool GenericMapleServer::disconnect()
+template <class TCPServer, class TCPSock>
+bool GenericMapleServer<TCPServer, TCPSock>::disconnect()
 {
 	return true;
 }
 
-
-bool GenericMapleServer::reconnect()
+template <class TCPServer, class TCPSock>
+bool GenericMapleServer<TCPServer, TCPSock>::reconnect()
 {
 	return true;
 }
 
-bool GenericMapleServer::alertServer(int command)
+template <class TCPServer, class TCPSock>
+bool GenericMapleServer<TCPServer, TCPSock>::alertServer(int command)
 {
 	return true;
 }
 
-bool GenericMapleServer::spawnWorker(std::shared_ptr<TCPClientSocket> client)
+template <class TCPServer, class TCPSock>
+bool GenericMapleServer<TCPServer, TCPSock>::spawnWorker(std::shared_ptr<TCPClientSocket<TCPSock>> client)
 {
 	return true;
 }
+*/

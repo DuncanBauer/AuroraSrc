@@ -3,27 +3,10 @@
 
 #include "../../tools/Packet.h"
 
-#if defined(_WIN32)
-	#warning "WIN32"
-	#include "cryptopp/aes.h"
-	#include "cryptopp/modes.h"
-	#include "cryptopp/filters.h"
-#elif defined(_WIN64)
-	#warning "WIN64"
-	#include "cryptopp/aes.h"
-	#include "cryptopp/modes.h"
-	#include "cryptopp/filters.h"
-#elif defined(__CYGWIN__)
-	#warning "CYGWIN"
-	#include "cryptopp/aes.h"
-	#include "cryptopp/modes.h"
-	#include "cryptopp/filters.h"
-#elif defined(__linux__)
-	#warning "Linux"
-	#include "cryptopp/modes.h"
-	#include "cryptopp/aes.h"
-	#include "cryptopp/filters.h"
-#endif
+#include "cryptopp/aes.h"
+#include "cryptopp/modes.h"
+#include "cryptopp/filters.h"
+
 
 
 class MapleAESOFB

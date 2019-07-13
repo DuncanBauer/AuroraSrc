@@ -1,7 +1,7 @@
 #include "World.h"
 
 #include <algorithm>
-
+/*
 World::World() : id(-1), status(0), channelCount(0)
 {
 }
@@ -101,18 +101,18 @@ void World::addChannel(std::shared_ptr<ChannelServer> channel)
 bool World::removeChannel(std::shared_ptr<ChannelServer> channel)
 {
 	return true;
-	/*
-	auto it = this->channels.begin();
-	while(it != this->channels.end())
-	{
-		if(channel->getID() == *it.getID())
-		{
-			break;
-		}
-	}
-	if(it != this->channels.end())
-	{
-		this->channels.erase(it);
-	}
-	*/
+
+//	auto it = this->channels.begin();
+//	while(it != this->channels.end())
+//	{
+//		if(channel->getID() == *it.getID())
+//		{
+//			break;
+//		}
+//	}
+//	if(it != this->channels.end())
+//	{
+//		this->channels.erase(it);
+//	}
 }
+*/

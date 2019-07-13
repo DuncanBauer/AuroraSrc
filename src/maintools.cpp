@@ -1,56 +1,41 @@
+#include "net/login/LoginServer.h"
+#include "Master.h"
+
+/*
+extern "C"
+{
+	#include "lua/lua.h"
+	#include "lua/lualib.h"
+	#include "lua/lauxlib.h"
+}
+
+#include "boost/version.hpp"
 #include "tools/PacketStream.h"
 #include "net/crypto/MapleAESOFB.h"
-
-#if defined(_WIN32)
-	#warning "WIN32"
-	extern "C" 
-	{
-		#include "lua/lua.h"
-		#include "lua/lualib.h"
-		#include "lua/lauxlib.h"
-	}
-	//#include "mysqlcppconn8/jdbc/cppconn/driver.h"
-	#include "boost/version.hpp"
-#elif defined(_WIN64)
-	#warning "WIN64"
-	extern "C" 
-	{
-		#include "lua/lua.h"
-		#include "lua/lualib.h"
-		#include "lua/lauxlib.h"
-	}
-	//#include "mysqlcppconn8/jdbc/cppconn/driver.h"
-	#include "boost/version.hpp"
-#elif defined(__CYGWIN__)
-	#warning "CYGWIN"
-	extern "C" 
-	{
-		#include "lua/lua.h"
-		#include "lua/lualib.h"
-		#include "lua/lauxlib.h"
-	}
-	//#include "mysqlcppconn8/jdbc/cppconn/driver.h"
-	#include "boost/version.hpp"
-#elif defined(__linux__)
-	#warning "Linux"
-	extern "C" 
-	{
-		#include "lua.h"
-		#include "lualib.h"
-		#include "lauxlib.h"
-	}
-	#include "cppconn/driver.h"
-	#include "boost/version.hpp"
-#endif
-
-
 #include "net/db/MySQLConn.h"
+*/
+
+
 
 
 int main(int argc, char* argv[])
 {
+    /*
+    *   Windows socket testing
+    */
+    Master* master = new Master();
+    LoginServer<TCPSocketWindows> * server = new LoginServer<TCPSocketWindows>("127.0.0.1", 8484, master, 1);
+    server->run();
+    delete server;
+    delete master;
 
-/* 
+
+
+
+
+
+
+/*
  * 	LUA TESTING
  */
 
@@ -70,18 +55,27 @@ int main(int argc, char* argv[])
 
 
 
-/*	
+/*
  *	BOOST TESTING
  *
 	std::cout << BOOST_VERSION /100000 << "." << BOOST_VERSION / 100 % 1000 << "." << BOOST_VERSION % 100 << '\n';
-*/	
+*/
 
-	
+
+
+
+
+
+
 /*
  *	MYSQLCONNECTOR TESTING
  *
 */
-	MySQLConn conn;
+//	MySQLConn conn;
+
+
+
+
 
 
 
@@ -97,7 +91,7 @@ int main(int argc, char* argv[])
 	ivSend[3] = (byte)(rand() % 255);
 	MapleAESOFB send = MapleAESOFB(key, ivSend, (_short)(0xFFFF - 62));
 	MapleAESOFB recv = MapleAESOFB(key, ivRecv, 62);
-	
+
 	byte arr[4] = {0x12, 0x63, 0xD2, 0x4E};
 	recv.setIv(arr);
 	byte * test = recv.getIv();
@@ -139,7 +133,7 @@ int main(int argc, char* argv[])
 
 	std::ostringstream str = p.getByteStream();
 	std::cout << str.str().c_str() << '\n';
-	
+
 	str = p.getByteStreamHex();
 	std::cout << str.str().c_str() << '\n';
 
