@@ -32,31 +32,35 @@ WORLD_SOURCES = src/net/sockets/*.cpp \
 		src/net/crypto/*.cpp \
 		src/net/db/*.cpp \
 		src/net/*.cpp \
-    	src/tools/*.cpp \
+		src/tools/*.cpp \
 		src/Master.cpp \
 		src/main.cpp
 
-TOOLS_SOURCES = src/maintools.cpp \
+TOOLS_WINDOWS = src/maintools.cpp \
 		src/net/crypto/*.cpp \
 		src/tools/*.cpp \
 		src/net/sockets/TCPSocketWindows.cpp \
-		src/net/sockets/TCPClientSocket.cpp \
-		src/net/sockets/TCPServerSocket.cpp \
-		src/net/GenericMapleServer.cpp \
-		src/net/login/LoginWorker.cpp \
 		src/Master.cpp
 
+TOOLS_LINUX =   src/maintools.cpp \
+		src/net/crypto/*.cpp \
+		src/tools/*.cpp \
+		src/net/sockets/TCPSocket.cpp \
+		src/Master.cpp
 
 
 all :
 	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o master $(LFLAGS)
-	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o tools $(LFLAGS)
+	$(CC) $(CFLAGS) $(TOOLS_WINDOWS) -o wintools $(LFLAGS)
+	$(CC) $(CFLAGS) $(TOOLS_LINUX) -o lintools $(LFLAGS)
 
 master :
 	$(CC) $(CFLAGS) $(WORLD_SOURCES) -o master $(LFLAGS)
 
-tools :
-	$(CC) $(CFLAGS) $(TOOLS_SOURCES) -o tools $(LFLAGS)
+wintools :
+	$(CC) $(CFLAGS) $(TOOLS_WINDOWS) -o wintools $(LFLAGS)
+lintools :
+	$(CC) $(CFLAGS) $(TOOLS_LINUX) -o lintools $(LFLAGS)
 
 clean :
-	rm -f tools master
+	rm -f master lintools wintools

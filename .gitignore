@@ -1,6 +1,8 @@
-tools
+lintools
+wintools
 master
-tools.exe
+lintools.exe
+wintools.exe
 master.exe
 
 wz/*

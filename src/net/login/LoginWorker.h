@@ -4,25 +4,28 @@
 
 #include "../../tools/MaplePacketCreator.h"
 #include "../sockets/TCPClientSocket.h"
-#include "../sockets/TCPServerSocket.h"
+//#include "../sockets/TCPServerSocket.h"
 #include "../GenericWorker.h"
-//#include "LoginServer.h"
+#include "LoginServer.h"
 
 #include <iostream>
 #include "../crypto/MapleCodec.h"
 #include <queue>
 //#include <poll.h>
 
+template <class TCPSock>
+class LoginServer;
+
 
 template <class TCPSock>
 class LoginWorker : public GenericWorker
-{
+{	
 	public:
         LoginWorker()
         {
         }
 
-        LoginWorker(TCPServerSocket<TCPSock>* loginServer, std::shared_ptr<TCPClientSocket<TCPSock>> client)
+        LoginWorker(LoginServer<TCPSock>* loginServer, std::shared_ptr<TCPClientSocket<TCPSock>> client)
         {
         	this->loginServer = loginServer;
         	this->client = client;
@@ -159,7 +162,7 @@ class LoginWorker : public GenericWorker
         */
 	private:
 		int POLL_TIMEOUT = 500;
-		TCPServerSocket<TCPSock>* loginServer;
+		LoginServer<TCPSock>* loginServer;
 		std::shared_ptr<TCPClientSocket<TCPSock>> client;
 };
 

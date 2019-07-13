@@ -40,7 +40,6 @@
 #include <exception>
 #include <cstdio>
 
-//class TCPClientSocket;
 
 enum ServerStatus
 {
@@ -229,7 +228,7 @@ class TCPServerSocket: public TCPSock
 
         */	return true;
         }
-
+/*
         bool listening()
         {
             #ifdef LINUX
@@ -376,7 +375,7 @@ class TCPServerSocket: public TCPSock
             #endif
             return true;
         }
-
+*/
         bool connect()
         {
         	return true;
@@ -399,6 +398,14 @@ class TCPServerSocket: public TCPSock
 
         bool spawnWorker(std::shared_ptr<TCPClientSocket<TCPSock>> client)
         {
+		//std::shared_ptr<LoginWorker<TCPSock>> loginWorker(new LoginWorker<TCPSock>(this, client));
+		//std::shared_ptr<std::thread> loginWorkerThread = std::make_shared<std::thread>([loginWorker]()
+		//{
+		//	loginWorker->run();
+		//});
+		//loginWorkerThread->detach();
+		//this->addConnection(client);
+
         	return true;
         }
 
